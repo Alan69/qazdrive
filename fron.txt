@@ -1,0 +1,11 @@
+{% extends 'base.html' %} 
+{% block title %}{% endblock %}
+{% load static %}
+{%block owncss%}
+ 
+{%endblock%}
+
+{%block content%}
+
+{%endblock%} 
+{%block boots%} {%endblock%}
