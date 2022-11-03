@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 # Create your models here.
 
 class CustomUserManager(BaseUserManager):
-    def _create_user(self, email, password, first_name, last_name, **extra_fields):
+    def _create_user(self, email, password, first_name, last_name, city, **extra_fields):
         if not email:
             raise ValueError("Email must be provided")
         if not password:
@@ -13,6 +13,7 @@ class CustomUserManager(BaseUserManager):
             email = self.normalize_email(email),
             first_name = first_name,
             last_name = last_name,
+            city = city,
             **extra_fields
         )
 
@@ -20,11 +21,11 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
     
-    def create_user(self, email, password, first_name, last_name, **extra_fields):
+    def create_user(self, email, password, first_name, last_name, city, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_active', True)
         extra_fields.setdefault('is_superuser', False)
-        return self._create_user(email, password, first_name, last_name, password, **extra_fields)
+        return self._create_user(email, password, first_name, last_name, city, password, **extra_fields)
     
     def create_superuser(self, email, password, first_name, last_name, **extra_fields):
         extra_fields.setdefault('is_staff', True)
@@ -32,10 +33,16 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', True)
         return self._create_user(email, password, first_name, last_name, **extra_fields)
 
+CITIES = (
+    ('Astana', 'Астана'),
+    ('Almaty', 'Алматы'),
+     )
+
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(db_index=True, unique=True, max_length=254)
     first_name = models.CharField(max_length=250)
     last_name = models.CharField(max_length=250)
+    city = models.CharField(max_length=250, choices=CITIES)
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

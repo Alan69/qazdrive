@@ -6,23 +6,23 @@ from .forms import CustomUserCreationForm
 
 # Create your views here.
 def loginPage(request):
-    # if request.user.is_authenticated:
-    #     return redirect('index')
-    # else:
+    if request.user.is_authenticated:
+        return redirect('index')
+    else:
        if request.method=="POST":
-        username=request.POST.get('username')
+        email=request.POST.get('email')
         password=request.POST.get('password')
-        user=authenticate(request,username=username,password=password)
+        user=authenticate(request,email=email,password=password)
         if user is not None:
             auth_login(request, user)
-            return redirect('/')
+            return redirect('index')
        context={}
        return render(request,'login/login.html',context)
 
 def registerPage(request):
-    # if request.user.is_authenticated:
-    #     return redirect('login') 
-    # else: 
+    if request.user.is_authenticated:
+        return redirect('login') 
+    else: 
         form = CustomUserCreationForm()
         if request.method=='POST':
             form = CustomUserCreationForm(request.POST)
