@@ -1,6 +1,13 @@
+
+.login-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 .form-signin {
   width: 100%;
-  max-width: 330px;
+  width: 330px;
   padding: 15px;
   margin: 0 auto;
 }
