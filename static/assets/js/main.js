@@ -344,5 +344,4 @@ function thirdFunc() {
   document.getElementById("fBlock").style.backgroundColor = "white";
   document.getElementById("sBlock").style.backgroundColor = "white";
   document.getElementById("tBlock").style.backgroundColor = "#e1e1e1";
-
 }

@@ -10,12 +10,12 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
+    <!-- <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Пойск" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
-    </div><!-- End Search Bar -->
+    </div> -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -47,7 +47,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="{%url 'profile'%}">
                 <i class="bi bi-person"></i>
                 <span>Мой профиль</span>
               </a>
@@ -77,7 +77,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="{% url 'logoutPage' %}">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Выйти</span>
               </a>
@@ -102,21 +102,18 @@
           <i class="bi bi-person"></i>
           <span>Профиль</span>
         </a>
-      </li><!-- End Profile Page Nav -->
+      </li>
+      
+     
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
-          <i class="bi bi-envelope"></i>
-          <span>Мои тесты</span>
+        <a class="nav-link collapsed" href="#">
+          <i class="ri-pencil-ruler-2-fill"></i>
+          <span>Начать тестирование</span>
         </a>
       </li><!-- End Quiz Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-question-circle"></i>
-          <span>Инструкция</span>
-        </a>
-      </li><!-- End F.A.Q Page Nav -->
+      
 
       
 

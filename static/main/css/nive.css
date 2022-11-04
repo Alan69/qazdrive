@@ -947,7 +947,12 @@ h6 {
 .dashboard .recent-sales .dataTable-top {
   padding: 0 0 10px 0;
 }
-
+.dataTable-top {
+  display: none!important;
+}
+.dataTable-bottom {
+  display: none!important;
+}
 .dashboard .recent-sales .dataTable-bottom {
   padding: 10px 0 0 0;
 }
@@ -1268,7 +1273,11 @@ h6 {
   display: none;
 }
 .tariff__block {
+  border-radius: 5px!important;
+  box-shadow: 0px 0 30px rgb(1 41 112 / 10%);
+  background-color: white;
   margin-top: 20px;
+  padding: 20px;
 }
 .tariff__block-inner {
   display: flex;
