@@ -92,38 +92,72 @@
           <li class="list-inline-item"><a href="#">Support</a></li>
         </ul>
       </footer>
+>>>>>>> b7ab6fd422acfcc24c856f2b4fc97062946779dc
     </div>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+<div class="reg-block">
+    <form class="form-signin" method="POST" style="width: 330px;">
+      {% csrf_token %} {{form.as_p}}
+      <div class="checkbox mb-3"></div>
+      <div class="text-center">
+        <button
+          class="btn btn-lg btn-primary btn-block"
+          type="submit"
+          style="width: 100%"
+        >
+          Зарегистрировать
+        </button>
+        <p class="mt-5 mb-3 text-muted">&copy; U - Study</p>
+      </div>
+    </form>
+  </div>
+    
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      window.jQuery ||
+        document.write(
+          '<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>'
+        );
+    </script>
     <script src="../../assets/js/vendor/popper.min.js"></script>
     <script src="../../dist/js/bootstrap.min.js"></script>
     <script src="../../assets/js/vendor/holder.min.js"></script>
     <script>
       // Example starter JavaScript for disabling form submissions if there are invalid fields
-      (function() {
-        'use strict';
+      (function () {
+        "use strict";
 
-        window.addEventListener('load', function() {
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.getElementsByClassName('needs-validation');
+        window.addEventListener(
+          "load",
+          function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName("needs-validation");
 
-          // Loop over them and prevent submission
-          var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-              if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(
+              forms,
+              function (form) {
+                form.addEventListener(
+                  "submit",
+                  function (event) {
+                    if (form.checkValidity() === false) {
+                      event.preventDefault();
+                      event.stopPropagation();
+                    }
+                    form.classList.add("was-validated");
+                  },
+                  false
+                );
               }
-              form.classList.add('was-validated');
-            }, false);
-          });
-        }, false);
+            );
+          },
+          false
+        );
       })();
     </script>
   </div>
-{%endblock%} 
-{%block boots%} {%endblock%}
+  {%endblock%} {%block boots%} {%endblock%}
+</div>

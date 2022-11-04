@@ -5,9 +5,9 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 class CustomUserManager(BaseUserManager):
     def _create_user(self, email, password, first_name, last_name, city, **extra_fields):
         if not email:
-            raise ValueError("Email must be provided")
+            raise ValueError("Необходимо указать адрес электронной почты")
         if not password:
-            raise ValueError("Password is not provided")
+            raise ValueError("Необходимо ввести пароль")
         
         user = self.model(
             email = self.normalize_email(email),
@@ -39,10 +39,10 @@ CITIES = (
      )
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(db_index=True, unique=True, max_length=254)
-    first_name = models.CharField(max_length=250)
-    last_name = models.CharField(max_length=250)
-    city = models.CharField(max_length=250, choices=CITIES)
+    email = models.EmailField(db_index=True, unique=True, max_length=254, verbose_name="Email")
+    first_name = models.CharField(max_length=250, verbose_name="Имя")
+    last_name = models.CharField(max_length=250, verbose_name="Фамилия")
+    city = models.CharField(max_length=250, choices=CITIES, verbose_name="Выберите город")
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

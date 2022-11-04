@@ -1,13 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>hello</h1>
-    <button><a href="{% url 'logoutPage' %}">выход</a></button>
-</body>
-</html>
+{% extends 'base.html' %} 
+{% block title %}test{% endblock title %}
+{% load static %}
+
+
+{%block content%}
+{%include 'components/menu.html'%} 
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Главная страница</h1>
+      </div>
+      <div class="col-lg-8">
+        <div class="row">
+            <!-- Sales Card -->
+            <div class=" col-xxl-4 col-md-6" style="cursor: pointer;" onclick="firstFunc()">
+                <div class="card info-card sales-card" id="fBlock">
+                  <div class="card-body">
+                    <h5 class="card-title">Старт <span>| Тариф</span></h5>
+  
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="ri-rocket-2-fill"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6>₸3,063</h6>
+                        <span class="text-success small pt-1 fw-bold">1</span> <span class="text-muted small pt-2 ps-1">Тест</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Sales Card -->
+              <!-- Revenue Card -->
+            <div class=" col-xxl-4 col-md-6" style="cursor: pointer;" onclick="secondFunc()">
+                <div class="card info-card revenue-card" id="sBlock">
+                  <div class="card-body">
+                    <h5 class="card-title">Оптимальный <span>| Тариф</span></h5>
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="ri-heart-2-fill"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6>₸4,990</h6>
+                        <span class="text-success small pt-1 fw-bold">3</span> <span class="text-muted small pt-2 ps-1">Теста</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Revenue Card -->
+  
+              <!-- Customers Card -->
+              <div class=" col-xxl-4 col-xl-12" style="cursor: pointer;" onclick="thirdFunc()">
+                <div class="card info-card customers-card" id="tBlock">
+                  <div class="card-body">
+                    <h5 class="card-title">Выгодный <span>| Тариф</span></h5>
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-currency-dollar"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6>₸9,990</h6>
+                        <span class="text-danger small pt-1 fw-bold">8</span> <span class="text-muted small pt-2 ps-1">Тестов</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Customers Card -->
+        </div>
+        <div class="tariff__block" id="first-tariff">
+            <div class="tariff__block-inner">
+                <div class="tariff__left-side">
+                    <h4>ИТОГО</h4>
+                    <p>Тариф <span>Старт</span></p>
+                    <p>1 теста</p>
+                </div>
+                <div class="tariff_right-side">
+                    <p>3063 ₸</p>
+                </div>
+            </div>
+            <div class="tariff__buy-block">
+                <button class="btn btn-primary text-white"><a class="text-white" href="/payment-info">Перейти в оплате</a></button>
+            </div>
+           </div>
+          
+          <div  class="tariff__block" id="second-tariff">
+            <div class="tariff__block-inner">
+                <div class="tariff__left-side">
+                    <h4>ИТОГО</h4>
+                    <p>Тариф <span>«Оптимальный»</span></p>
+                    <p>3 теста</p>
+                </div>
+                <div class="tariff_right-side">
+                    <p>4990 ₸</p>
+                </div>
+            </div>
+            <div class="tariff__buy-block">
+                <button class="btn btn-primary text-white"><a class="text-white" href="/payment-info">Перейти в оплате</a></button>
+            </div>
+           </div>
+         
+          <div  class="tariff__block" id="third-tariff">
+            <div class="tariff__block-inner">
+                <div class="tariff__left-side">
+                    <h4>ИТОГО</h4>
+                    <p>Тариф <span>Выгодный</span></p>
+                    <p>3 теста</p>
+                </div>
+                <div class="tariff_right-side">
+                    <p>9990 ₸</p>
+                </div>
+            </div>
+            <div class="tariff__buy-block">
+                <button class="btn btn-primary text-white"><a class="text-white" href="/payment-info">Перейти в оплате</a></button>
+            </div>
+           </div>
+      </div>
+      
+      </div>
+</main>
+{%endblock content%} 
+
+
+
+
+    
