@@ -43,7 +43,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=250, verbose_name="Имя")
     last_name = models.CharField(max_length=250, verbose_name="Фамилия")
     city = models.CharField(max_length=250, choices=CITIES, verbose_name="Выберите город")
-
+    forget_password_token = models.CharField(max_length=100)
+    
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
