@@ -1306,3 +1306,21 @@ h6 {
   justify-content: end;
   margin-top: 20px;
 }
+#fBlock {
+  transition: .2s;
+}
+#sBlock {
+  transition: .2s;
+}
+#tBlock {
+  transition: .2s;
+}
+#fBlock:hover {
+  background-color: #e1e1e1!important;
+}
+#sBlock:hover {
+  background-color: #e1e1e1!important;
+}
+#tBlock:hover {
+  background-color: #e1e1e1!important;
+}
