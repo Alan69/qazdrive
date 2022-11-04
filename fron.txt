@@ -6,6 +6,6 @@
 {%endblock%}
 
 {%block content%}
-
+{%include 'components/menu.html'%} 
 {%endblock%} 
 {%block boots%} {%endblock%}
