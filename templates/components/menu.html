@@ -45,23 +45,21 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
-            {% if request.path == '/main/' %}
+            {%if request.path == '/main/'%}
             <li>
               <a class="dropdown-item d-flex align-items-center" href="{%url 'profile'%}">
                 <i class="bi bi-person"></i>
                 <span>Мой профиль</span>
               </a>
             </li>
-            {% else %}
+            {%else%}
             <li>
               <a class="dropdown-item d-flex align-items-center" href="{%url 'index'%}">
-                <i class="bi bi-person"></i>
+                <i class="ri-home-4-line"></i>
                 <span>Главная</span>
               </a>
             </li>
-            {% endif %}
-
+            {%endif%}
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -105,21 +103,14 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-heading">Меню</li>
-      {% if request.path == '/main/' %}
+
       <li class="nav-item">
         <a class="nav-link collapsed" href="{%url 'profile'%}">
           <i class="bi bi-person"></i>
           <span>Профиль</span>
         </a>
       </li>
-      {% else %}
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{%url 'index'%}">
-          <i class="bi bi-person"></i>
-          <span>Главная</span>
-        </a>
-      </li>
-      {% endif %}
+      
      
 
       <li class="nav-item">
