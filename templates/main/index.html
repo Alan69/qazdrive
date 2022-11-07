@@ -24,7 +24,7 @@
                         </div>
                         <div class="ps-3">
                           <h6>₸3,063</h6>
-                          <span class="text-success small pt-1 fw-bold">1</span> <span class="text-muted small pt-2 ps-1">Тест</span>
+                          <span class="text-success small pt-1 fw-bold">1</span> <span class="text-muted small pt-2 ps-1">Месяц</span>
                         </div>
                       </div>
                     </div>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="ps-3">
                           <h6>₸4,990</h6>
-                          <span class="text-success small pt-1 fw-bold">3</span> <span class="text-muted small pt-2 ps-1">Теста</span>
+                          <span class="text-success small pt-1 fw-bold">3</span> <span class="text-muted small pt-2 ps-1">Месяца</span>
                         </div>
                       </div>
                     </div>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="ps-3">
                           <h6>₸9,990</h6>
-                          <span class="text-danger small pt-1 fw-bold">8</span> <span class="text-muted small pt-2 ps-1">Тестов</span>
+                          <span class="text-danger small pt-1 fw-bold">8</span> <span class="text-muted small pt-2 ps-1">Месяца</span>
                         </div>
                       </div>
                     </div>
@@ -71,7 +71,7 @@
                   <div class="tariff__left-side">
                      <h5 style="color: #012970; font-weight: 600;">ИТОГО</h5> 
                       <p style="color: #012970;">Тариф <span>«Старт»</span> <i class="ri-rocket-2-fill"></i></p>
-                      <p style="color: #012970;">1 тест</p>
+                      <p style="color: #012970;">1 месяц</p>
                   </div>
                  
                   <div class="tariff_right-side">
@@ -89,7 +89,7 @@
                   <div class="tariff__left-side">
                       <h5 style="color: #012970; font-weight: 600;">ИТОГО</h5>
                       <p style="color: #012970;">Тариф <span>«Оптимальный»</span> <i class="ri-heart-2-fill"></i></p>
-                      <p style="color: #012970;">3 теста</p>
+                      <p style="color: #012970;">3 месяца</p>
                   </div>
                   <div class="tariff_right-side">
                       <p style="color: #012970;">4990 ₸</p>
@@ -105,7 +105,7 @@
                   <div class="tariff__left-side">
                       <h5 style="color: #012970; font-weight: 600;">ИТОГО</h5>
                       <p style="color: #012970;">Тариф <span>«Выгодный»</span> <i class="bi bi-currency-dollar"></i></p>
-                      <p style="color: #012970;">8 тестов</p>
+                      <p style="color: #012970;">8 месяца</p>
                   </div>
                   <div class="tariff_right-side">
                       <p style="color: #012970;">9990 ₸</p>
@@ -153,8 +153,8 @@
                     <td>01.11.2022</td>
                     <td><a href="#" class="text-primary">Tmp</a></td>
                     <td>Руский</td>
-                    <td>14/40</td>
-                    <td><span class="badge bg-danger">Не завершен</span></td>
+                    <td>-/40</td>
+                    <td><span class="badge bg-warning">Не завершен</span></td>
                   </tr>
                   <tr>
                     <th scope="row"><a href="#">4</a></th>
@@ -162,7 +162,7 @@
                     <td><a href="#" class="text-primary">D, D1</a></td>
                     <td>Руский</td>
                     <td>14/40</td>
-                    <td><span class="badge bg-warning">Время истекло</span></td>
+                    <td><span class="badge bg-danger">Время истекло</span></td>
                   </tr>
                 </tbody>
               </table>
@@ -173,13 +173,19 @@
           
         </div>
         <div class="col-lg-4">
-         <div class="card">
+         <div class="card info-card">
           <div class="card-body">
-            <div class="card-title">
-              <h5>Подписка <span>| На месяц</span></h5>
-              <p>Lorem ipsum dolor sit amet.</p>
-              <p>Lorem ipsum dolor sit.</p>
+            <div>
+              <h5 class="card-title">Подписка <span>| На месяц</span></h5>
+              <div  class="subs-block">
+              <img src="{% static 'assets/img/drivingschool.png'%}" class="drive-img" alt="driveschool">
+              <h6>₸20,000</h6>
+              <p>Доступ ко всем тестам</p>
+              <p>Сеанс до 20 пользователей за раз</p>
+            </div>
+            <div style="display: flex; justify-content: end">
               <button class="btn btn-primary">Подписаться</button>
+            </div>
             </div>
           </div>
          </div>

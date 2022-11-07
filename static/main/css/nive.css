@@ -1324,3 +1324,17 @@ h6 {
 #tBlock:hover {
   background-color: #e1e1e1!important;
 }
+.drive-img {
+  background-color: #d6e2f8;
+  padding: 20px;
+  border-radius: 50%;
+}
+.subs-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.drive-img {
+  width: 104px;
+  height: 104px;
+}

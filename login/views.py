@@ -45,6 +45,7 @@ def logoutPage(request):
     logout(request)
     return redirect('login')
 
+
 def ChangePassword(request , token):
     context = {}
     
