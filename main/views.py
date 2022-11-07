@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.conf import settings
 from userconf.models import User
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
+from django.contrib.auth.views import PasswordChangeView
+from .forms import PasswordChangingForm
 
 # Create your views here.
 def index(request):
@@ -26,4 +28,9 @@ def updaterecord(request, id):
     user.city = city
     user.email = email
     user.save()
-    return HttpResponseRedirect(reverse('profile'))
+    return HttpResponseRedirect(reverse_lazy('profile'))
+
+class PasswordsChangeView(PasswordChangeView):
+    from_class = PasswordChangingForm
+    success_url = reverse_lazy('profile')
+    
