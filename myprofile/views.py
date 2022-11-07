@@ -12,7 +12,7 @@ def profile(request):
     context={
         "obj":obj,
     }
-    return render(request, 'main/profile.html', context)
+    return render(request, 'profile/profile.html', context)
 
 def updaterecord(request, id):
     first_name = request.POST['first_name']

@@ -1,0 +1,34 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %} 
+
+<div class = "container">
+    <br>
+    <h2 class = "text-center">Заказы</h2> 
+    <br>
+  </div> 
+  <br><br>
+  <div class="row">
+    {% for order in all_orders %}
+      <div class="col-md-4 col-sm-6 col-lg-3">
+        <div class="card">
+          <div class="card-body text-center">
+            <p class="card-title">id: {{ order.id }}</p>
+            <hr>
+            <p class="card-title">customer: {{ order.customer }}</p>
+            <hr>
+            <p class="card-text">product: {{ order.product }}</p>
+            <hr>
+            <p class="card-text">description: {{ order.description }}</p>
+            <hr>
+            <p class="card-text">sum: {{ order.sum }}</p>
+            <hr>
+            <p class="card-text">paid_at: {{order.paid_at}}</p>
+          </div>
+        </div>
+        <br><br><br>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

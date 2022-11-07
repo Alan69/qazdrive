@@ -1,0 +1,16 @@
+{% extends 'base.html' %} 
+{% block title %}{% endblock %}
+{% load static %}
+{%block owncss%}
+ 
+{%endblock%}
+
+{%block content%}
+{%include 'components/menu.html'%} 
+<main id="main" class="main">
+    
+        {{response.order.id}}
+   
+</main>
+{%endblock%} 
+{%block boots%} {%endblock%}
