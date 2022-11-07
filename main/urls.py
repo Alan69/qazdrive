@@ -1,10 +1,7 @@
 from django.urls import path
-from .views import index, profile, updaterecord, PasswordChangeView
+from .views import index
 
 
 urlpatterns = [
     path('', index, name='index'),
-    path('profile/', profile, name='profile'),
-    path('profile/updaterecord/<int:id>', updaterecord, name='updaterecord'),
-    path('profile/updatepassword/', PasswordChangeView.as_view(template_name="main/profile.html"), name='updatepassword'),
 ]

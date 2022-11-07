@@ -104,12 +104,21 @@
 
       <li class="nav-heading">Меню</li>
 
+      {%if request.path == '/main/'%}
       <li class="nav-item">
         <a class="nav-link collapsed" href="{%url 'profile'%}">
           <i class="bi bi-person"></i>
-          <span>Профиль</span>
+          <span>Мой профиль</span>
         </a>
       </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{%url 'index'%}">
+          <i class="ri-home-4-line"></i>
+          <span>Главная</span>
+        </a>
+      </li>
+      {% endif %}
       
      
 
