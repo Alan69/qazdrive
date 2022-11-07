@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'main',
     'login',
     'userconf',
+    'myprofile',
+    'payments',
+    'tarif',
+    'quiz',
 ]
 
 MIDDLEWARE = [
