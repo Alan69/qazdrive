@@ -24,4 +24,21 @@ def post_order():
 
     return print(f"Status Code: {response.text}")
 
-post_order()
+# post_order()
+
+def get_orders():
+    all_orders = {}
+    disable_warnings(InsecureRequestWarning)
+    url = 'http://kaspi.ustudy.center/temp/orders/'
+    response = requests.get(url, verify=False)
+    data = response.json()
+    orders = data['orders']
+    all_orders = orders
+    
+    for i in range(0, len(all_orders)):
+  
+        if i == (len(all_orders)-1):
+            print("The last element of list using loop : "
+                + str(all_orders[i]))
+                
+get_orders()

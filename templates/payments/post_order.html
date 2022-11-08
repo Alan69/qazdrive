@@ -10,7 +10,8 @@
 <main id="main" class="main">
     
         {{response.order.id}}
-   
+
+        <a href="https://pay.ustudy.center/?returnUrl=http://127.0.0.1:8000/main/&amount={{response.order.sum}}&id={{response.order.id}}">оплата</a>
 </main>
 {%endblock%} 
 {%block boots%} {%endblock%}

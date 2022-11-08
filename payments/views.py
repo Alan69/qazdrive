@@ -13,30 +13,32 @@ def get_orders(request):
     response = requests.get(url, verify=False)
     data = response.json()
     orders = data['orders']
-    all_orders = orders 
+    all_orders = orders
+    context = {
+        "all_orders": all_orders,
+    }
+    return render (request, 'payments/get_orders.html', context)
 
-    return render (request, 'payments/get_orders.html', { "all_orders": all_orders} )
-
-def post_order(request):
+def post_order(request, product, sum):
     disable_warnings(InsecureRequestWarning)
     url = 'https://kaspi.ustudy.center/temp/orders/'
+    customer = request.user.first_name + " " + request.user.last_name
     data={
-    "customer": "Гасир2",
-    "product": "Экзамен Тест",
-    "sum": "2",
-    "description": "тест Гасир"
+    "customer": customer,
+    "product": product,
+    "sum": sum,
+    "description": "тест"
     }
-
-    response = requests.post(url, json=data,  verify=False)
+    response = requests.post(url, json=data, verify=False)
 
     if (response.status_code != 204
             and 'content-type' in response.headers
             and 'application/json' in response.headers['content-type']):
         parsed = response.json()
-        print('parsed response: 👉️', parsed)
+        # print('parsed response: 👉️', parsed)
     else:
         print('conditions not met')
     
-    print(f"Status Code: {response.status_code}, Response: {response.json()}")
+    # print(f"Status Code: {response.status_code}, Response: {response.json()}")
 
     return render(request, 'payments/post_order.html', { "response": response.json()} )
