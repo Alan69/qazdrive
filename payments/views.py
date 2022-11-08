@@ -21,14 +21,16 @@ def get_orders(request):
 
 def post_order(request, product, sum):
     disable_warnings(InsecureRequestWarning)
-    url = 'https://kaspi.ustudy.center/temp/orders/'
+    url = 'http://qazdrivekaspi.kz/api/orders'
     customer = request.user.first_name + " " + request.user.last_name
+    customer_id = request.user.id
     data={
-    "customer": customer,
-    "product": product,
-    "sum": sum,
-    "description": "тест"
-    }
+"full_name": customer,
+"tariff": product,
+"sum": sum,
+"user_id": customer_id,
+"course": "QazDrive"
+}
     response = requests.post(url, json=data, verify=False)
 
     if (response.status_code != 204
