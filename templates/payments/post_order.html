@@ -1,6 +1,9 @@
-{% extends 'base.html' %} {% block title %}{% endblock %} {% load static %}
-{%block owncss%} {%endblock%} {%block content%} {%include
-'components/menu.html'%}
+{% extends 'base.html' %} 
+{% block title %}
+{% endblock %} 
+{% load static %}
+{%block owncss%} {%endblock%} {%block content%} 
+{%include 'components/menu.html'%}
 <main id="main" class="main">
   <div class="kaspi__cheque col-sm-6 col-xl-5">
     <img src="{% static 'assets/img/logo-kaspi-bank.png'%}" alt="" />
@@ -35,7 +38,7 @@
     <div class="kaspi__cheque-info">
       <div class="kaspi__cheque-text for-cheque">ФИО палтельщика</div>
       <div class="kaspi__cheque-text">
-        {{request.user.first_name}} {{request.user.last}}
+        {{request.user.last_name|slice:":1"}}. {{request.user.first_name}} 
       </div>
     </div>
     <div class="kaspi__cheque-info">
