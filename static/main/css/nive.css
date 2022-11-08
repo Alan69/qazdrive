@@ -20,12 +20,12 @@ body {
 
 a {
   color: #4154f1;
-  text-decoration: none!important;
+  text-decoration: none !important;
 }
 
 a:hover {
   color: #717ff5;
-  text-decoration: none!important;
+  text-decoration: none !important;
 }
 
 h1,
@@ -235,8 +235,8 @@ h6 {
 /* Card */
 .card {
   margin-bottom: 30px;
-  border: none!important;
-  border-radius: 5px!important;
+  border: none !important;
+  border-radius: 5px !important;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
 }
 
@@ -263,7 +263,7 @@ h6 {
 }
 
 .card-body {
-  padding: 0 20px 20px 20px!important;
+  padding: 0 20px 20px 20px !important;
 }
 
 .card-img-overlay {
@@ -477,7 +477,7 @@ h6 {
   list-style: none;
 }
 
-.header-nav>ul {
+.header-nav > ul {
   margin: 0;
   padding: 0;
 }
@@ -646,7 +646,6 @@ h6 {
 }
 
 @media (min-width: 1200px) {
-
   #main,
   #footer {
     margin-left: 300px;
@@ -660,7 +659,6 @@ h6 {
 }
 
 @media (min-width: 1200px) {
-
   .toggle-sidebar #main,
   .toggle-sidebar #footer {
     margin-left: 0;
@@ -778,9 +776,9 @@ h6 {
 --------------------------------------------------------------*/
 /* Filter dropdown */
 .filter {
-  position: absolute!important;
-  right: 0px!important;
-  top: 15px!important;
+  position: absolute !important;
+  right: 0px !important;
+  top: 15px !important;
 }
 
 .filter .icon {
@@ -899,7 +897,7 @@ h6 {
 }
 
 /* News & Updates */
-.dashboard .news .post-item+.post-item {
+.dashboard .news .post-item + .post-item {
   margin-top: 15px;
 }
 
@@ -948,10 +946,10 @@ h6 {
   padding: 0 0 10px 0;
 }
 .dataTable-top {
-  display: none!important;
+  display: none !important;
 }
 .dataTable-bottom {
-  display: none!important;
+  display: none !important;
 }
 .dashboard .recent-sales .dataTable-bottom {
   padding: 10px 0 0 0;
@@ -1171,7 +1169,7 @@ h6 {
   padding: 12px 15px;
 }
 
-.contact .php-email-form button[type=submit] {
+.contact .php-email-form button[type="submit"] {
   background: #4154f1;
   border: 0;
   padding: 10px 30px;
@@ -1180,7 +1178,7 @@ h6 {
   border-radius: 4px;
 }
 
-.contact .php-email-form button[type=submit]:hover {
+.contact .php-email-form button[type="submit"]:hover {
   background: #5969f3;
 }
 
@@ -1273,7 +1271,7 @@ h6 {
   display: none;
 }
 .tariff__block {
-  border-radius: 5px!important;
+  border-radius: 5px !important;
   box-shadow: 0px 0 30px rgb(1 41 112 / 10%);
   background-color: white;
   margin-top: 20px;
@@ -1284,7 +1282,6 @@ h6 {
   justify-content: space-between;
   margin-bottom: 30px;
   border-bottom: 2px solid #c4c1c5;
-
 }
 .tariff__left-side p {
   font-size: 20px;
@@ -1307,22 +1304,22 @@ h6 {
   margin-top: 20px;
 }
 #fBlock {
-  transition: .2s;
+  transition: 0.2s;
 }
 #sBlock {
-  transition: .2s;
+  transition: 0.2s;
 }
 #tBlock {
-  transition: .2s;
+  transition: 0.2s;
 }
 #fBlock:hover {
-  background-color: #e1e1e1!important;
+  background-color: #e1e1e1 !important;
 }
 #sBlock:hover {
-  background-color: #e1e1e1!important;
+  background-color: #e1e1e1 !important;
 }
 #tBlock:hover {
-  background-color: #e1e1e1!important;
+  background-color: #e1e1e1 !important;
 }
 .drive-img {
   background-color: #d6e2f8;
@@ -1337,4 +1334,75 @@ h6 {
 .drive-img {
   width: 104px;
   height: 104px;
+}
+.kaspi__cheque {
+  --mask: radial-gradient(7px at 50% 9.6px, #000 99%, #0000 101%)
+      calc(50% - 12px) 0/24px 51% repeat-x,
+    radial-gradient(7px at 50% -3.6px, #0000 99%, #000 101%) 50% 6px/24px
+      calc(51% - 6px) repeat-x,
+    radial-gradient(7px at 50% calc(100% - 9.6px), #000 99%, #0000 101%)
+      calc(50% - 12px) 100%/24px 51% repeat-x,
+    radial-gradient(7px at 50% calc(100% + 3.6px), #0000 99%, #000 101%) 50%
+      calc(100% - 6px) / 24px calc(51% - 6px) repeat-x;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  background-color: white;
+  padding: 15px;
+  border-radius: 1px solid black;
+
+}
+.kaspi__cheque img {
+  width: 75px; 
+}
+.kaspi__cheque-title {
+  border-bottom: 1px solid gray;
+  padding-bottom: 20px  ;
+}
+.kaspi__cheque-header {
+  display: flex;
+  align-items: center;
+}
+.kaspi__cheque-inner {
+  margin-left: 8px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+.kaspi__cheque-qr-button {
+  background-color: #A3DB5A;
+  text-align: center;
+  margin-top: 30px;
+  padding: 25px 0px;
+  color: white;
+  transition: .2s;
+  cursor: pointer;
+}
+.kaspi__cheque-qr-button a {
+  color: white;
+  font-size: 30px;
+  font-weight: 600;
+}
+.kaspi__cheque-qr-button a:hover {
+  color: white;
+
+}
+.kaspi__cheque-qr-button:hover {
+  background-color: #94c752;
+}
+.kaspi__cheque-info {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eaeaea;
+  padding: 8px 0px;
+}
+.kaspi__cheque-text {
+  font-size: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.for-cheque {
+  color: #ACA5A9;
+}
+.pdw {
+  padding-bottom: 30px;
 }

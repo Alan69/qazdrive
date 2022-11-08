@@ -9,9 +9,45 @@
 {%include 'components/menu.html'%} 
 <main id="main" class="main">
     
-        {{response.data.id}}
+        <div class="kaspi__cheque col-xl-4">
+                <img src="{% static 'assets/img/logo-kaspi-bank.png'%}" alt="">
+                <h3 class="kaspi__cheque-title">Образование</h3>
+                <div class="kaspi__cheque-header">
+                  <div class="kaspi__cheque-inner">
+                    <img src="{%static 'assets/img/qazdrive-logo.png' %}" alt="">
+                  </div>
+                  <div>
+                    <h5>QazTesting</h5>
+                    <h5>Номер заказа: {{response.data.id}}</h5>
+                  </div>
+                </div>
+                <div class="kaspi__cheque-qr-button">
+                  <a href="https://pay.ustudy.center/?returnUrl=http://127.0.0.1:8000/main/&amount={{response.data.sum}}&id={{response.data.id}}">Оплатить по QR коду</a>
+                </div>
+                <div class="kaspi__cheque-info">
+                  <div class="kaspi__cheque-text for-cheque">Сумма</div>
+                  <div class="kaspi__cheque-text">{{response.data.sum}}</div>
+                </div>
+                <div class="kaspi__cheque-info">
+                  <div class="kaspi__cheque-text  for-cheque">Комиссия</div>
+                  <div class="kaspi__cheque-text">0 ₸</div>
+                </div>
+                <div class="kaspi__cheque-info">
+                  <div class="kaspi__cheque-text  for-cheque">Тариф</div>
+                  <div class="kaspi__cheque-text">Оптимальный</div>
+                </div>
+                <div class="kaspi__cheque-info">
+                  <div class="kaspi__cheque-text  for-cheque">ФИО палтельщика</div>
+                  <div class="kaspi__cheque-text">Нуржан Б</div>
+                </div>
+                <div class="kaspi__cheque-info">
+                  <div class="kaspi__cheque-text  for-cheque">Курс</div>
+                  <div class="kaspi__cheque-text">QazDrive</div>
+                </div>
+                <div class="pdw"></div>
+              </div>
 
-        <a href="https://pay.ustudy.center/?returnUrl=http://127.0.0.1:8000/main/&amount={{response.data.sum}}&id={{response.data.id}}">оплата</a>
+
 </main>
 {%endblock%} 
 {%block boots%} {%endblock%}

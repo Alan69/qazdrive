@@ -7,5 +7,8 @@
 
 {%block content%}
 {%include 'components/menu.html'%} 
+<main id="main" class="main">
+<!-- ПИШИ СЮДА -->
+</main>
 {%endblock%} 
 {%block boots%} {%endblock%}
