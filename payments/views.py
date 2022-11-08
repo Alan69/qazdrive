@@ -15,7 +15,7 @@ def get_orders(request):
     orders = data['orders']
     all_orders = orders 
 
-    return render (request, 'payments/get_orders.html', { "all_orders": all_orders} )
+    return render (request, 'payments/get_orders.html', { "all_orders": all_orders})
 
 def post_order(request):
     disable_warnings(InsecureRequestWarning)
@@ -36,7 +36,7 @@ def post_order(request):
         print('parsed response: 👉️', parsed)
     else:
         print('conditions not met')
-    
+
     print(f"Status Code: {response.status_code}, Response: {response.json()}")
 
     return render(request, 'payments/post_order.html', { "response": response.json()} )
