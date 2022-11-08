@@ -8,8 +8,7 @@
 {%block content%}
 {%include 'components/menu.html'%} 
 <main id="main" class="main">
-    
-        <div class="kaspi__cheque col-xl-4">
+        <div class="kaspi__cheque col-sm-6 col-xl-5">
                 <img src="{% static 'assets/img/logo-kaspi-bank.png'%}" alt="">
                 <h3 class="kaspi__cheque-title">Образование</h3>
                 <div class="kaspi__cheque-header">
@@ -34,11 +33,11 @@
                 </div>
                 <div class="kaspi__cheque-info">
                   <div class="kaspi__cheque-text  for-cheque">Тариф</div>
-                  <div class="kaspi__cheque-text">Оптимальный</div>
+                  <div class="kaspi__cheque-text">{{response.data.tariff}}</div>
                 </div>
                 <div class="kaspi__cheque-info">
                   <div class="kaspi__cheque-text  for-cheque">ФИО палтельщика</div>
-                  <div class="kaspi__cheque-text">Нуржан Б</div>
+                  <div class="kaspi__cheque-text">{{request.user.first_name}} {{request.user.last_name}}</div>
                 </div>
                 <div class="kaspi__cheque-info">
                   <div class="kaspi__cheque-text  for-cheque">Курс</div>
@@ -46,8 +45,6 @@
                 </div>
                 <div class="pdw"></div>
               </div>
-
-
 </main>
 {%endblock%} 
 {%block boots%} {%endblock%}

@@ -25,18 +25,26 @@ def post_order():
 
     return print(f"Status Code: {response.text}")
 
-post_order()
+# post_order()
 
 def get_orders():
     all_orders = {}
-    disable_warnings(InsecureRequestWarning)
-    url = 'http://qazdrivekaspi.kz/api/orders/48'
-    response = requests.get(url, verify=False)
+    url = 'http://qazdrivekaspi.kz/api/orders'
+    response = requests.get(url)
     data = response.json()
-    orders = data
+    orders = data[data]
     all_orders = orders
-    
+
+    if (response.status_code != 204
+            and 'content-type' in response.headers
+            and 'application/json' in response.headers['content-type']):
+        parsed = response.json()
+        # print('parsed response: 👉️', parsed)
+    else:
+        print('conditions not met')
+
     return print(all_orders)
+    
     # for i in range(0, len(all_orders)):
   
     #     if i == (len(all_orders)-1):
@@ -44,3 +52,23 @@ def get_orders():
     #             + str(all_orders[i]))
 
 # get_orders()
+
+def check_order():
+    # kaspi_id = request.user.payment_id
+    url = 'http://qazdrivekaspi.kz/api/orders/48'
+    response = requests.get(url)
+
+    if (response.status_code != 204
+            and 'content-type' in response.headers
+            and 'application/json' in response.headers['content-type']):
+        parsed = response.json()
+    else:
+        print("sosi")
+
+    if parsed['data']['txn_id'] == None:
+        print("Не оплочено")
+    else:
+        print("оплочено")
+
+    
+check_order()

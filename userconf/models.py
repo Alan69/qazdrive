@@ -44,6 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=250, verbose_name="Фамилия")
     city = models.CharField(max_length=250, choices=CITIES, verbose_name="Выберите город")
     forget_password_token = models.CharField(max_length=100)
+    payment_id = models.IntegerField(verbose_name="ID оплаты каспи")
     
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

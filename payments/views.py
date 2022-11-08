@@ -4,6 +4,7 @@ from urllib3.exceptions import InsecureRequestWarning
 from urllib3 import disable_warnings
 from django.http import HttpResponse
 import json
+from userconf.models import User
 
 # Create your views here.
 def get_orders(request):
@@ -44,3 +45,20 @@ def post_order(request, product, sum):
     # print(f"Status Code: {response.status_code}, Response: {response.json()}")
 
     return render(request, 'payments/post_order.html', { "response": response.json()} )
+
+def check_order(request):
+    kaspi_id = request.user.payment_id
+    url = f'http://qazdrivekaspi.kz/api/orders/{kaspi_id}'
+    response = requests.get(url)
+
+    if (response.status_code != 204
+            and 'content-type' in response.headers
+            and 'application/json' in response.headers['content-type']):
+        parsed = response.json()
+    else:
+        print('conditions not met')
+    
+    if parsed['data']['txn_id'] == None:
+        return HttpResponse("Не оплачено")
+    else:
+        return HttpResponse("Оплачено")
