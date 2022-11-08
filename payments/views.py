@@ -6,7 +6,7 @@ from django.http import HttpResponse
 import json
 from userconf.models import User
 
-# Create your views here.
+# TODO удалить на продакшене
 def get_orders(request):
     all_orders = {}
     disable_warnings(InsecureRequestWarning)
@@ -21,30 +21,32 @@ def get_orders(request):
     return render (request, 'payments/get_orders.html', context)
 
 def post_order(request, product, sum):
-    disable_warnings(InsecureRequestWarning)
     url = 'http://qazdrivekaspi.kz/api/orders'
     customer = request.user.first_name + " " + request.user.last_name
     customer_id = request.user.id
-    data={
-"full_name": customer,
-"tariff": product,
-"sum": sum,
-"user_id": customer_id,
-"course": "QazDrive"
-}
-    response = requests.post(url, json=data, verify=False)
 
+    data={
+    "full_name": customer,
+    "tariff": product,
+    "sum": sum,
+    "user_id": customer_id,
+    "course": "QazDrive"
+    }
+    
+    response = requests.post(url, json=data)
+    
     if (response.status_code != 204
             and 'content-type' in response.headers
             and 'application/json' in response.headers['content-type']):
         parsed = response.json()
-        # print('parsed response: 👉️', parsed)
+
+        currunt_user = User.objects.filter(id = request.user.id).first()
+        currunt_user.payment_id = parsed['data']['id']
+        currunt_user.save()
     else:
         print('conditions not met')
-    
-    # print(f"Status Code: {response.status_code}, Response: {response.json()}")
-
     return render(request, 'payments/post_order.html', { "response": response.json()} )
+
 
 def check_order(request):
     kaspi_id = request.user.payment_id

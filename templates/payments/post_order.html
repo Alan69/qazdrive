@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% block title %}{% endblock %} {% load static %}
+{% extends 'base.html' %} 
+{% block title %}
+{% endblock %} 
+{% load static %}
 {%block owncss%} {%endblock%} {%block content%} 
 {%include 'components/menu.html'%}
 <main id="main" class="main">
@@ -16,7 +19,7 @@
     </div>
     <div class="kaspi__cheque-qr-button">
       <a
-        href="https://pay.ustudy.center/?returnUrl=http://127.0.0.1:8000/main/&amount={{response.data.sum}}&id={{response.data.id}}"
+        href="http://qazdrivekaspi.kz/api/pay/{{response.data.id}}?returnUrl=http://127.0.0.1:8000/main/"
         >Оплатить по QR коду</a
       >
     </div>
@@ -35,7 +38,7 @@
     <div class="kaspi__cheque-info">
       <div class="kaspi__cheque-text for-cheque">ФИО палтельщика</div>
       <div class="kaspi__cheque-text">
-        {{request.user.first_name}} {{request.user.last}}
+        {{request.user.last_name|slice:":1"}}. {{request.user.first_name}} 
       </div>
     </div>
     <div class="kaspi__cheque-info">

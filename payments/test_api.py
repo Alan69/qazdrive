@@ -39,17 +39,10 @@ def get_orders():
             and 'content-type' in response.headers
             and 'application/json' in response.headers['content-type']):
         parsed = response.json()
-        # print('parsed response: 👉️', parsed)
     else:
         print('conditions not met')
 
     return print(all_orders)
-    
-    # for i in range(0, len(all_orders)):
-  
-    #     if i == (len(all_orders)-1):
-    #         print("The last element of list using loop : "
-    #             + str(all_orders[i]))
 
 # get_orders()
 
@@ -71,4 +64,4 @@ def check_order():
         print("оплочено")
 
     
-check_order()
+# check_order()
