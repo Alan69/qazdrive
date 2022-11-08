@@ -41,7 +41,7 @@
                         </div>
                         <div class="ps-3">
                           <h6>₸4,990</h6>
-                          <span class="text-success small pt-1 fw-bold">2</span> <span class="text-muted small pt-2 ps-1">Месяца</span>
+                          <span class="text-success small pt-1 fw-bold">3</span> <span class="text-muted small pt-2 ps-1">Месяца</span>
                         </div>
                       </div>
                     </div>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="ps-3">
                           <h6>₸9,990</h6>
-                          <span class="text-danger small pt-1 fw-bold">3</span> <span class="text-muted small pt-2 ps-1">Месяца</span>
+                          <span class="text-danger small pt-1 fw-bold">8</span> <span class="text-muted small pt-2 ps-1">Месяца</span>
                         </div>
                       </div>
                     </div>
@@ -80,7 +80,8 @@
                   </div>
               </div>
               <div class="tariff__buy-block">
-                  <button class="btn btn-primary text-white"><a class="text-white" href="{% url 'post_order' %}">Перейти к оплате</a></button>
+                  <button class="btn btn-primary text-white"><a class="text-white" 
+                    href="{% url 'post_order' 'start' '1' %}">Перейти к оплате</a></button>
               </div>
              </div>
             
@@ -96,7 +97,8 @@
                   </div>
               </div>
               <div class="tariff__buy-block">
-                  <button class="btn btn-primary text-white"><a class="text-white" href="#">Перейти к оплате</a></button>
+                  <button class="btn btn-primary text-white"><a class="text-white" 
+                    href="{% url 'post_order' 'optimalny' '2' %}">Перейти к оплате</a></button>
               </div>
              </div>
            
@@ -112,7 +114,8 @@
                   </div>
               </div>
               <div class="tariff__buy-block">
-                  <button class="btn btn-primary text-white"><a class="text-white" href="#">Перейти к оплате</a></button>
+                  <button class="btn btn-primary text-white"><a class="text-white" 
+                    href="{% url 'post_order' 'vygodny' '3' %}">Перейти к оплате</a></button>
               </div>
              </div>
   
@@ -196,7 +199,6 @@
       
 </main>
 {%endblock content%} 
-
 
 
 

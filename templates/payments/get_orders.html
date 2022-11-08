@@ -24,6 +24,7 @@
             <p class="card-text">sum: {{ order.sum }}</p>
             <hr>
             <p class="card-text">paid_at: {{order.paid_at}}</p>
+            <a href="https://pay.ustudy.center/?returnUrl=http://127.0.0.1:8000/main/&amount={{ order.sum }}&id={{ order.id }}">оплата</a>
           </div>
         </div>
         <br><br><br>
