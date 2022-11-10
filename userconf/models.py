@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 # Create your models here.
 
 class CustomUserManager(BaseUserManager):
-    def _create_user(self, email, password, first_name, last_name, city, **extra_fields):
+    def _create_user(self, email, password, first_name, last_name, **extra_fields):
         if not email:
             raise ValueError("Необходимо указать адрес электронной почты")
         if not password:
@@ -13,7 +13,6 @@ class CustomUserManager(BaseUserManager):
             email = self.normalize_email(email),
             first_name = first_name,
             last_name = last_name,
-            city = city,
             **extra_fields
         )
 
@@ -44,7 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=250, verbose_name="Фамилия")
     city = models.CharField(max_length=250, choices=CITIES, verbose_name="Выберите город")
     forget_password_token = models.CharField(max_length=100)
-    payment_id = models.IntegerField(verbose_name="ID оплаты каспи")
+    payment_id = models.IntegerField(verbose_name="ID оплаты каспи", null=True, default=0)
     
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

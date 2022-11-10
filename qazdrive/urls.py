@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('login.urls')),
     path('profile/', include('myprofile.urls')),
     path('payments/', include('payments.urls')),
+    path('quiz/', include('quiz.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
