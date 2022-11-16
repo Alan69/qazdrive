@@ -21,7 +21,7 @@ def get_orders(request):
     return render (request, 'payments/get_orders.html', context)
 
 def post_order(request, product, sum):
-    url = 'http://qazdrivekaspi.kz/api/orders'
+    url = 'https://qazdrivekaspi.kz/api/orders'
     customer = request.user.first_name + " " + request.user.last_name
     customer_id = request.user.id
 
@@ -50,7 +50,7 @@ def post_order(request, product, sum):
 
 def check_order(request):
     kaspi_id = request.user.payment_id
-    url = f'http://qazdrivekaspi.kz/api/orders/{kaspi_id}'
+    url = f'https://qazdrivekaspi.kz/api/orders/{kaspi_id}'
     response = requests.get(url)
 
     if (response.status_code != 204

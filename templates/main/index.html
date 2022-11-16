@@ -41,7 +41,7 @@
                         </div>
                         <div class="ps-3">
                           <h6>₸4,990</h6>
-                          <span class="text-success small pt-1 fw-bold">3</span> <span class="text-muted small pt-2 ps-1">Месяца</span>
+                          <span class="text-success small pt-1 fw-bold">2</span> <span class="text-muted small pt-2 ps-1">Месяца</span>
                         </div>
                       </div>
                     </div>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="ps-3">
                           <h6>₸9,990</h6>
-                          <span class="text-danger small pt-1 fw-bold">8</span> <span class="text-muted small pt-2 ps-1">Месяца</span>
+                          <span class="text-danger small pt-1 fw-bold">3</span> <span class="text-muted small pt-2 ps-1">Месяца</span>
                         </div>
                       </div>
                     </div>
@@ -81,7 +81,7 @@
               </div>
               <div class="tariff__buy-block">
                   <button class="btn btn-primary text-white"><a class="text-white" 
-                    href="{% url 'post_order' 'start' '1' %}">Перейти к оплате</a></button>
+                    href="{% url 'post_order' 'start' '3063' %}">Перейти к оплате</a></button>
               </div>
              </div>
             
@@ -90,7 +90,7 @@
                   <div class="tariff__left-side">
                       <h5 style="color: #012970; font-weight: 600;">ИТОГО</h5>
                       <p style="color: #012970;">Тариф <span>«Оптимальный»</span> <i class="ri-heart-2-fill"></i></p>
-                      <p style="color: #012970;">3 месяца</p>
+                      <p style="color: #012970;">2 месяца</p>
                   </div>
                   <div class="tariff_right-side">
                       <p style="color: #012970;">4990 ₸</p>
@@ -98,7 +98,7 @@
               </div>
               <div class="tariff__buy-block">
                   <button class="btn btn-primary text-white"><a class="text-white" 
-                    href="{% url 'post_order' 'optimalny' '2' %}">Перейти к оплате</a></button>
+                    href="{% url 'post_order' 'optimalny' '4990' %}">Перейти к оплате</a></button>
               </div>
              </div>
            
@@ -107,7 +107,7 @@
                   <div class="tariff__left-side">
                       <h5 style="color: #012970; font-weight: 600;">ИТОГО</h5>
                       <p style="color: #012970;">Тариф <span>«Выгодный»</span> <i class="bi bi-currency-dollar"></i></p>
-                      <p style="color: #012970;">8 месяца</p>
+                      <p style="color: #012970;">3 месяца</p>
                   </div>
                   <div class="tariff_right-side">
                       <p style="color: #012970;">9990 ₸</p>
@@ -115,7 +115,7 @@
               </div>
               <div class="tariff__buy-block">
                   <button class="btn btn-primary text-white"><a class="text-white" 
-                    href="{% url 'post_order' 'vygodny' '3' %}">Перейти к оплате</a></button>
+                    href="{% url 'post_order' 'vygodny' '9990' %}">Перейти к оплате</a></button>
               </div>
              </div>
   
@@ -182,17 +182,55 @@
               <h5 class="card-title">Подписка <span>| На месяц</span></h5>
               <div  class="subs-block">
               <img src="{% static 'assets/img/drivingschool.png'%}" class="drive-img" alt="driveschool">
-              <h6>₸20,000</h6>
+              <h6>₸200,000</h6>
+              <p>Доступ ко всем тестам</p>
+              <p>Сеанс до 10 пользователей за раз</p>
+            </div>
+            <div style="display: flex; justify-content: end">
+              <button class="btn btn-primary text-white"><a class="text-white" 
+                href="{% url 'post_order' 'paketone' '200000' %}">Перейти к оплате</a></button>
+            </div>
+            </div>
+          </div>
+         </div>
+         <div class="card info-card">
+          <div class="card-body">
+            <div>
+              <h5 class="card-title">Подписка <span>| На месяц</span></h5>
+              <div  class="subs-block">
+              <img src="{% static 'assets/img/drivingschool.png'%}" class="drive-img" alt="driveschool">
+              <h6>₸500,000</h6>
               <p>Доступ ко всем тестам</p>
               <p>Сеанс до 20 пользователей за раз</p>
             </div>
             <div style="display: flex; justify-content: end">
-              <button class="btn btn-primary">Подписаться</button>
+              <button class="btn btn-primary text-white"><a class="text-white" 
+                href="{% url 'post_order' 'pakettwo' '500000' %}">Перейти к оплате</a></button>
+            </div>
+            </div>
+          </div>
+         </div>
+
+         <div class="card info-card">
+          <div class="card-body">
+            <div>
+              <h5 class="card-title">Подписка <span>| На месяц</span></h5>
+              <div  class="subs-block">
+              <img src="{% static 'assets/img/drivingschool.png'%}" class="drive-img" alt="driveschool">
+              <h6>₸1000,000</h6>
+              <p>Доступ ко всем тестам</p>
+              <p>Сеанс до 500 пользователей за раз</p>
+            </div>
+            <div style="display: flex; justify-content: end">
+              <button class="btn btn-primary text-white"><a class="text-white" 
+                href="{% url 'post_order' 'paketthree' '999999' %}">Перейти к оплате</a></button>
             </div>
             </div>
           </div>
          </div>
         </div>
+
+
       </div>
       
       </div>

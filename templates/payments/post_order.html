@@ -10,7 +10,6 @@
     <h3 class="kaspi__cheque-title">Образование</h3>
     <div class="kaspi__cheque-header">
       <div class="kaspi__cheque-inner">
-        <img src="{%static 'assets/img/qazdrive-logo.png' %}" alt="" />
       </div>
       <div>
         <h5>QazTesting</h5>
@@ -19,14 +18,14 @@
     </div>
     <div class="kaspi__cheque-qr-button">
       <a
-        href="http://qazdrivekaspi.kz/api/pay/{{response.data.id}}?returnUrl=http://127.0.0.1:8000/main/"
+        href="https://qazdrivekaspi.kz/api/pay/{{response.data.id}}?returnUrl=http://93.170.73.19:8000/main/"
         >Оплатить по QR коду</a
       >
     </div>
     
     <div class="kaspi__cheque-info">
       <div class="kaspi__cheque-text for-cheque">Сумма</div>
-      <div class="kaspi__cheque-text">{{response.data.sum}}</div>
+      <div class="kaspi__cheque-text">{{response.data.sum}} ₸</div>
     </div>
     <div class="kaspi__cheque-info">
       <div class="kaspi__cheque-text for-cheque">Комиссия</div>
