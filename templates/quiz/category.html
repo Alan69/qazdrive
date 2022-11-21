@@ -1,0 +1,9 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %} 
+<div class="container">
+    {% for c in category %}
+   <a href="{% url 'quiz' c.id %}"><h1> {{ c.cat_name }} </h1></a>
+    {% endfor %}
+</div>
+{% endblock %}
