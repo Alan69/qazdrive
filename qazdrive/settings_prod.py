@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-mvm$o(+)gc%j@&s_i&sej)+k#1zz0t!f9ufx8r^+c4cj(i85eo
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.qaztesting.kz']
 
 # Application definition
 
@@ -130,10 +130,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = BASE_DIR / 'static'
-STATICFILES_DIRS=[
-    BASE_DIR / 'static',
-]
+STATIC_ROOT = BASE_DIR / 'static'
+# STATICFILES_DIRS=[
+#     BASE_DIR / 'static',
+# ]
 
 MEDIA_ROOT = BASE_DIR / 'media' # media directory in the root directory
 MEDIA_URL = '/media/'

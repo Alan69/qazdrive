@@ -12,6 +12,7 @@
       <div class="row">
         <div class="col-lg-8">
           <div class="row">
+
               <!-- Sales Card -->
               <div class=" col-xxl-4 col-md-6">
                   <div class="card info-card sales-card" id="fBlock" onclick="firstFunc()" style="cursor: pointer;">
@@ -29,7 +30,9 @@
                       </div>
                     </div>
                   </div>
-                </div><!-- End Sales Card -->
+                </div>
+                <!-- End Sales Card -->
+
                 <!-- Revenue Card -->
               <div class=" col-xxl-4 col-md-6">
                   <div class="card info-card revenue-card" id="sBlock" onclick="secondFunc()" style="cursor: pointer;">
@@ -41,12 +44,13 @@
                         </div>
                         <div class="ps-3">
                           <h6>₸4,990</h6>
-                          <span class="text-success small pt-1 fw-bold">3</span> <span class="text-muted small pt-2 ps-1">Месяца</span>
+                          <span class="text-success small pt-1 fw-bold">2</span> <span class="text-muted small pt-2 ps-1">Месяца</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div><!-- End Revenue Card -->
+                </div>
+                <!-- End Revenue Card -->
     
                 <!-- Customers Card -->
                 <div class=" col-xxl-4 col-xl-12">
@@ -59,18 +63,20 @@
                         </div>
                         <div class="ps-3">
                           <h6>₸9,990</h6>
-                          <span class="text-danger small pt-1 fw-bold">8</span> <span class="text-muted small pt-2 ps-1">Месяца</span>
+                          <span class="text-danger small pt-1 fw-bold">3</span> <span class="text-muted small pt-2 ps-1">Месяца</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div><!-- End Customers Card -->
+                </div>
+                <!-- End Customers Card -->
           </div>
+
           <div class="tariff__block" id="first-tariff">
               <div class="tariff__block-inner">
                   <div class="tariff__left-side">
                      <h5 style="color: #012970; font-weight: 600;">ИТОГО</h5> 
-                      <p style="color: #012970;">Тариф <span>«Старт»</span> <i class="ri-rocket-2-fill"></i></p>
+                      <p style="color: #012970;">Тариф <span>«Старт»</span> <i class='ri-rocket-2-fill'></i></p>
                       <p style="color: #012970;">1 месяц</p>
                   </div>
                  
@@ -81,7 +87,7 @@
               </div>
               <div class="tariff__buy-block">
                   <button class="btn btn-primary text-white"><a class="text-white" 
-                    href="{% url 'post_order' 'start' '1' %}">Перейти к оплате</a></button>
+                    href="{% url 'post_order' 'start' '3063' %}">Перейти к оплате</a></button>
               </div>
              </div>
             
@@ -90,7 +96,7 @@
                   <div class="tariff__left-side">
                       <h5 style="color: #012970; font-weight: 600;">ИТОГО</h5>
                       <p style="color: #012970;">Тариф <span>«Оптимальный»</span> <i class="ri-heart-2-fill"></i></p>
-                      <p style="color: #012970;">3 месяца</p>
+                      <p style="color: #012970;">2 месяца</p>
                   </div>
                   <div class="tariff_right-side">
                       <p style="color: #012970;">4990 ₸</p>
@@ -98,7 +104,7 @@
               </div>
               <div class="tariff__buy-block">
                   <button class="btn btn-primary text-white"><a class="text-white" 
-                    href="{% url 'post_order' 'optimalny' '2' %}">Перейти к оплате</a></button>
+                    href="{% url 'post_order' 'optimalny' '4990' %}">Перейти к оплате</a></button>
               </div>
              </div>
            
@@ -107,7 +113,7 @@
                   <div class="tariff__left-side">
                       <h5 style="color: #012970; font-weight: 600;">ИТОГО</h5>
                       <p style="color: #012970;">Тариф <span>«Выгодный»</span> <i class="bi bi-currency-dollar"></i></p>
-                      <p style="color: #012970;">8 месяца</p>
+                      <p style="color: #012970;">3 месяца</p>
                   </div>
                   <div class="tariff_right-side">
                       <p style="color: #012970;">9990 ₸</p>
@@ -115,11 +121,11 @@
               </div>
               <div class="tariff__buy-block">
                   <button class="btn btn-primary text-white"><a class="text-white" 
-                    href="{% url 'post_order' 'vygodny' '3' %}">Перейти к оплате</a></button>
+                    href="{% url 'post_order' 'vygodny' '9990' %}">Перейти к оплате</a></button>
               </div>
              </div>
   
-             <div class="card recent-sales overflow-auto" style="margin-top: 50px;">
+          <div class="card recent-sales overflow-auto" style="margin-top: 50px;">
             <div class="card-body">
               <h5 class="card-title">Результаты <span>| Тестирования</span></h5>
   
@@ -176,23 +182,63 @@
           
         </div>
         <div class="col-lg-4">
+
          <div class="card info-card">
           <div class="card-body">
             <div>
               <h5 class="card-title">Подписка <span>| На месяц</span></h5>
               <div  class="subs-block">
               <img src="{% static 'assets/img/drivingschool.png'%}" class="drive-img" alt="driveschool">
-              <h6>₸20,000</h6>
+              <h6>₸200,000</h6>
               <p>Доступ ко всем тестам</p>
-              <p>Сеанс до 20 пользователей за раз</p>
+              <p>Сеанс до 10 пользователей за раз</p>
             </div>
             <div style="display: flex; justify-content: end">
-              <button class="btn btn-primary">Подписаться</button>
+              <button class="btn btn-primary text-white"><a class="text-white" 
+                href="{% url 'post_order' 'paketone' '200000' %}">Перейти к оплате</a></button>
             </div>
             </div>
           </div>
          </div>
+
+         <div class="card info-card">
+          <div class="card-body">
+            <div>
+              <h5 class="card-title">Подписка <span>| На месяц</span></h5>
+              <div  class="subs-block">
+              <img src="{% static 'assets/img/drivingschool.png'%}" class="drive-img" alt="driveschool">
+              <h6>₸500,000</h6>
+              <p>Доступ ко всем тестам</p>
+              <p>Сеанс до 20 пользователей за раз</p>
+            </div>
+            <div style="display: flex; justify-content: end">
+              <button class="btn btn-primary text-white"><a class="text-white" 
+                href="{% url 'post_order' 'pakettwo' '500000' %}">Перейти к оплате</a></button>
+            </div>
+            </div>
+          </div>
+         </div>
+
+         <div class="card info-card">
+          <div class="card-body">
+            <div>
+              <h5 class="card-title">Подписка <span>| На месяц</span></h5>
+              <div  class="subs-block">
+              <img src="{% static 'assets/img/drivingschool.png'%}" class="drive-img" alt="driveschool">
+              <h6>₸1,000,000</h6>
+              <p>Доступ ко всем тестам</p>
+              <p>Сеанс до 500 пользователей за раз</p>
+            </div>
+            <div style="display: flex; justify-content: end">
+              <button class="btn btn-primary text-white"><a class="text-white" 
+                href="{% url 'post_order' 'paketthree' '999999' %}">Перейти к оплате</a></button>
+            </div>
+            </div>
+          </div>
+         </div>
+
         </div>
+
       </div>
       
       </div>

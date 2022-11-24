@@ -6,20 +6,6 @@ from django.http import HttpResponse
 import json
 from userconf.models import User
 
-# TODO удалить на продакшене
-def get_orders(request):
-    all_orders = {}
-    disable_warnings(InsecureRequestWarning)
-    url = 'http://kaspi.ustudy.center/temp/orders/'
-    response = requests.get(url, verify=False)
-    data = response.json()
-    orders = data['orders']
-    all_orders = orders
-    context = {
-        "all_orders": all_orders,
-    }
-    return render (request, 'payments/get_orders.html', context)
-
 def post_order(request, product, sum):
     url = 'https://qazdrivekaspi.kz/api/orders'
     customer = request.user.first_name + " " + request.user.last_name
@@ -30,7 +16,7 @@ def post_order(request, product, sum):
     "tariff": product,
     "sum": sum,
     "user_id": customer_id,
-    "course": "QazDrive"
+    "course": "ПДД"
     }
     
     response = requests.post(url, json=data)
@@ -52,15 +38,20 @@ def check_order(request):
     kaspi_id = request.user.payment_id
     url = f'https://qazdrivekaspi.kz/api/orders/{kaspi_id}'
     response = requests.get(url)
-
+    is_payed = False
     if (response.status_code != 204
             and 'content-type' in response.headers
             and 'application/json' in response.headers['content-type']):
         parsed = response.json()
+
+        if parsed['data']['txn_id'] == None:
+            is_payed = False
+        else:
+            is_payed = True
     else:
         print('conditions not met')
     
-    if parsed['data']['txn_id'] == None:
-        return HttpResponse("Не оплачено")
-    else:
+    if is_payed == True:
         return HttpResponse("Оплачено")
+    else:
+        return HttpResponse("Не оплачено")

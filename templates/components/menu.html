@@ -4,7 +4,6 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="{%url 'index'%}" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">QazTesting</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -32,48 +31,12 @@
 
         <li class="nav-item dropdown pe-3">
 
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="{% static 'assets/img/profile-header.png'%}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{request.user.last_name}} {{request.user.first_name}}</span>
-          </a><!-- End Profile Iamge Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-              <h6>{{request.user.last_name}} {{request.user.first_name}}</h6>
-              <span>Пользователь</span>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            {%if request.path == '/main/'%}
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="{%url 'profile'%}">
-                <i class="bi bi-person"></i>
-                <span>Мой профиль</span>
-              </a>
-            </li>
-            {%else%}
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="{%url 'index'%}">
-                <i class="ri-home-4-line"></i>
-                <span>Главная</span>
-              </a>
-            </li>
-            {%endif%}
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-           
+          <a class="nav-link nav-profile d-flex align-items-center pe-0 text-dark" href="#" data-bs-toggle="dropdown">
             
+            {{request.user.last_name}} {{request.user.first_name}}
+          </a>
 
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="{% url 'logoutPage' %}">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Выйти</span>
-              </a>
-            </li>
-
-          </ul>
+         
         </li>
 
       </ul>
@@ -103,20 +66,15 @@
       </li>
       {% endif %}
       
-     
-
+      {%if request.path == '/quiz/'%}
+      {% else %}
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'category' %}">
           <i class="ri-pencil-ruler-2-fill"></i>
           <span>Начать тестирование</span>
         </a>
       </li><!-- End Quiz Nav -->
-
-      
-
-      
-
-
+      {% endif %}
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'logoutPage' %}">
@@ -124,8 +82,6 @@
           <span>Выйти</span>
         </a>
       </li><!-- End Login Page Nav -->
-
- 
 
     </ul>
 

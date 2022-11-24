@@ -377,14 +377,14 @@ btn.onclick = (event) => {
   let selectQuiz = categorys.options[categorys.selectedIndex].text;
 
   if (selectQuiz == "Категория А") {
-    window.location.href = "http://127.0.0.1:8000/quiz/1";
+    window.location.href = "http://qaztesting.kz/quiz/1";
   } else if (selectQuiz == "Категория В") {
-    window.location.href = "http://127.0.0.1:8000/quiz/2";
+    window.location.href = "http://qaztesting.kz/quiz/2";
   } else if (selectQuiz == "Категория C") {
-    window.location.href = "http://127.0.0.1:8000/quiz/3";
+    window.location.href = "http://qaztesting.kz/quiz/3";
   } else if (selectQuiz == "Категория D") {
-    window.location.href = "http://127.0.0.1:8000/quiz/4";
+    window.location.href = "http://qaztesting.kz/quiz/4";
   } else if (selectQuiz == "Категория E") {
-    window.location.href = "http://127.0.0.1:8000/quiz/5";
+    window.location.href = "http://qaztesting.kz/quiz/5";
   }
 };

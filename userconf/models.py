@@ -35,6 +35,30 @@ class CustomUserManager(BaseUserManager):
 CITIES = (
     ('Astana', 'Астана'),
     ('Almaty', 'Алматы'),
+    ('Aqtau', 'Актау'),
+    ('Aktobe', 'Актобе'),
+    ('Arqalyq', 'Аркалык'),
+    ('Atbasar', 'Атбасар'),
+    ('Atyrau', 'Атырау'),
+    ('Zaisan', 'Зайсан'),
+    ('Pavlodar', 'Павлодар'),
+    ('Petropavl', 'Петропавл'),
+    ('Ust-Kamenagorsk', 'Усть-Каменогорск'),
+    ('Balhash', 'Балхаш'),
+    ('Borovoe', 'Боровое'),
+    ('Karaganda', 'Караганда'),
+    ('Kokshetau', 'Кокшетау'),
+    ('Kostanai', 'Костанай'),
+    ('Kyzylorda', 'Кызылорда'),
+    ('Ridder', 'Риддер'),
+    ('Whymkent', 'Шымкент'),
+    ('Zhambyl', 'Жамбыл'),
+    ('Saryagash', 'Сарыагаш'),
+    ('Semipalatinsk', 'Семипалатинск'),
+    ('Ekibastuz', 'Экибастуз'),
+    ('Zhezgazgan', 'Жезказган'),
+    ('Oral', 'Орал'),
+    ('Taldykorgan', 'Талдыкорган'),
      )
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -42,7 +66,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=250, verbose_name="Имя")
     last_name = models.CharField(max_length=250, verbose_name="Фамилия")
     city = models.CharField(max_length=250, choices=CITIES, verbose_name="Выберите город")
-    forget_password_token = models.CharField(max_length=100)
+    number = models.CharField(max_length=12, null=True, blank=True)
+    is_have_tarif = models.BooleanField(default=False)
+    is_subscribed = models.BooleanField(default=False)
+    forget_password_token = models.CharField(max_length=100, null=True)
     payment_id = models.IntegerField(verbose_name="ID оплаты каспи", null=True, default=0)
     
     is_staff = models.BooleanField(default=False)

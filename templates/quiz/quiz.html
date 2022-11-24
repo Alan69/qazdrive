@@ -6,8 +6,8 @@
 
     <form method='post' action=''>
         {% csrf_token %}
-        
-        {% for q in questions %}
+
+        {% for q in page_obj %}
         <div class="form-group">
           <label for="question">{{q.question_text}}</label>
           <img src="{{q.url_image}}" alt="">
@@ -20,24 +20,28 @@
                 </label>
                
             </div>
+
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="{{q.quequestion_text}}" id="gridRadios2" value="{{q.answer2}}">
+                <input class="form-check-input" type="radio" name="{{q.question_text}}" id="gridRadios2" value="{{q.answer2}}">
                 <label class="form-check-label" for="gridRadios2">
                     {{q.answer2}}
                 </label>
             </div>
+
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="{{q.question_text}}" id="gridRadios1" value="{{q.answer3}}">
-                <label class="form-check-label" for="gridRadios1">
+                <input class="form-check-input" type="radio" name="{{q.question_text}}" id="gridRadios3" value="{{q.answer3}}">
+                <label class="form-check-label" for="gridRadios3">
                     {{q.answer3}}
                 </label>
             </div>
+
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="{{q.question_text}}" id="gridRadios2" value="{{q.answer4}}">
-                <label class="form-check-label" for="gridRadios2">
+                <input class="form-check-input" type="radio" name="{{q.question_text}}" id="gridRadios4" value="{{q.answer4}}">
+                <label class="form-check-label" for="gridRadios4">
                     {{q.answer4}}
                 </label>
             </div>
+
             <br>
         </div>  
         {% endfor %}
@@ -45,8 +49,21 @@
         
         <input id='timer' type='hidden' name="timer" value="">
         <br>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Завершить</button>
+
       </form>
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+                {% for i in nums %}
+                <li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{forloop.counter}}</a></li>
+                {% endfor %}
+
+                <!-- <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+                <li class="page-item"><a class="page-link" href="?page=2">2</a></li> -->
+        </ul>
+    </nav>
+
     </div>
     <script>
  
