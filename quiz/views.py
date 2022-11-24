@@ -10,14 +10,6 @@ def category(request):
     return render(request, 'quiz/category.html', context)
 
 def quiz(request, id):
-    # category = Category.objects.get(id = id)
-    # question = Question.objects.filter(category = category)
-    # context = {
-    #     'question': question,
-    # }
-
-    # return render(request, 'quiz/quiz.html', context)
-
     if request.method == 'POST':
         category = Category.objects.get(id = id)
         questions = Question.objects.filter(category = category)
@@ -29,7 +21,7 @@ def quiz(request, id):
 
             total+=1
             answer = request.POST.get(q.question_text) # Gets user's choice, i.e the key of answer
-            items = vars(q) # Holds the value for choice
+            # items = vars(q) # Holds the value for choice
             # print(items[answer])
             # Compares actual answer with user's choice
             if q.correctly == answer:
@@ -54,11 +46,3 @@ def quiz(request, id):
         'questions':questions
         }
         return render(request,'quiz/quiz.html', context)
-
-
-def result(request):
-    results = Result.objects.all()
-    context = {
-        'results': results,
-    }
-    return render(request, 'quiz, result.html', context)
