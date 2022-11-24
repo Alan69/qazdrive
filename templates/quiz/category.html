@@ -1,0 +1,40 @@
+{% extends 'base.html'%}
+{% load static %}
+{%block owncss%} {%endblock owncss%}
+{% block content %} 
+{%include 'components/menu.html'%} 
+<main id="main" class="main">
+    <div class="row">
+        <div class="col-4">
+            <select name="categorys" id="categorys" class="form-control" style="cursor: pointer;">
+                <option selected>Выбрать категорию</option>
+                {% for c in category %}
+                <option>{{ c.cat_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary text-white" style="margin-top: 20px;"  data-bs-toggle="modal" data-bs-target="#exampleModal">Начать тестирование</button>
+
+    <div class="modal  fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            
+
+      
+        
+            <div class="modal-body">
+              Вы уверены что хотите начать тестирование?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+              <button type="button" class="btn btn-primary" id="bpm">Начать</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</main>
+{% endblock %}
+{%block ownjs%} 
+
+{%endblock ownjs%}

@@ -1,25 +1,33 @@
 from django.db import models
+from userconf.models import User
 
-# Create your models here.
+class Category(models.Model):
+    cat_name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.cat_name
+
 class Question(models.Model):
-    # id_question = models.IntegerField(primary_key=True)
-    id_task = models.IntegerField(null=True, blank=True)
-    theme_number = models.IntegerField(null=True, blank=True)
-    partition_number = models.IntegerField(null=True, blank=True)
-    subpartition_number = models.IntegerField(null=True, blank=True)
-    order_num_question = models.IntegerField(null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    question_text = models.CharField(max_length=255)
     url_image = models.CharField(max_length=255, null=True, blank=True, default="None")
-    question = models.CharField(max_length=255, null=True, default="None")
 
-    def __str__(self):
-        return self.question
-
-class Answer(models.Model):
-    # id_answer = models.IntegerField(primary_key=True)
-    id_question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    order_num_answer = models.IntegerField(null=True, blank=True)
     correctly = models.CharField(max_length=255, null=True, blank=True)
-    answer = models.CharField(max_length=255, null=True, blank=True)
+    answer1 = models.CharField(max_length=255, null=True, blank=True)
+    answer2 = models.CharField(max_length=255, null=True, blank=True)
+    answer3 = models.CharField(max_length=255, null=True, blank=True)
+    answer4 = models.CharField(max_length=255, null=True, blank=True)
+    
+    def __str__(self):
+        return self.question_text
+
+class Result(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь")
+    score = models.FloatField(verbose_name="Балл")
 
     def __str__(self):
-        return self.answer
+        return str(self.category.cat_name) + "-" + self.user.get_full_name() + " " +  str(self.score)
+    
+    class Meta:
+        verbose_name_plural = 'Результаты'

@@ -1,0 +1,35 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %} 
+<div class="container">
+    <h2>Ваши результаты</h2>
+          </table>
+          <table class="table" style="width: 100% !important">
+            <thead>
+              <tr>
+                <th class="text-left">Баллов</th>
+                <th class="text-left">{{percent}}</th>
+              </tr>
+            </thead>
+            <tbody class="table-hover">
+              <tr>
+                <td class="text-left">Затраченное время</td>
+                <td class="text-left">{{time}} секунд</td>
+              </tr>
+              <tr>
+                <td class="text-left">Правильных ответов</td>
+                <td class="text-left">{{correct}}</td>
+              </tr>
+              <tr>
+                <td class="text-left">Неправильных ответов</td>
+                <td class="text-left">{{wrong}}</td>
+              </tr>
+              <tr>
+                <td class="text-left">Общее количество вопросов</td>
+                <td class="text-left">{{total}}</td>
+              </tr>
+            </tbody>
+      
+          </table>
+</div>
+{% endblock %}

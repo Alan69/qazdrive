@@ -10,7 +10,7 @@
     <div class="container">
       <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-        <h2>Checkout form</h2>
+        <h2>Форма Регистраций</h2>
         <!-- <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p> -->
       </div>
 
@@ -26,23 +26,23 @@
                   {{form.first_name.label}}
                   {{form.first_name}}
                   <div class="invalid-feedback">
-                    Valid first name is required.
+                    Требуется действительное имя.
                   </div>
                 </div>
                 <div class="col-md-6 mb-3">
                   {{form.last_name.label}}
                   {{form.last_name}}
                   <div class="invalid-feedback">
-                    Valid last name is required.
+                    Требуется действительная фамилия.
                   </div>
                 </div>
               </div>
   
-              <div class="col-md-6 mb-3">
+              <div class="col-md-6 mb-3 form-control1 form-control1">
                 {{form.email.label}}
                 {{form.email}}
                 <div class="invalid-feedback">
-                  Please enter a valid email address for shipping updates.
+                  Пожалуйста, введите действительный адрес электронной почты.
                 </div>
               </div>
                 <div class="col-md-6 mb-3">
@@ -53,7 +53,7 @@
                   </div>
                 </div>
   
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-3 form-control1">
                   {{form.password1.label}}
                   {{form.password1}}
                   <div class="invalid-feedback">
@@ -61,7 +61,7 @@
                   </div>
                 </div>
   
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-3 form-control1">
                   {{form.password2.label}}
                   {{form.password2}}
                   <div class="invalid-feedback">
@@ -82,15 +82,7 @@
           </div>
         </form>
         {{ form.errors }}
-        
 
-      <footer class="my-5 pt-5 text-muted text-center text-small">
-        <ul class="list-inline">
-          <li class="list-inline-item"><a href="#">Privacy</a></li>
-          <li class="list-inline-item"><a href="#">Terms</a></li>
-          <li class="list-inline-item"><a href="#">Support</a></li>
-        </ul>
-      </footer>
     </div>
     
     <script
