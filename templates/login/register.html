@@ -2,88 +2,108 @@
 {% block title %} Регистрация {% endblock %}
 {%load static%}
 {%block owncss%}
-  <link rel="stylesheet" href="{% static 'main/css/register.css' %}">
+  
 {%endblock%}
 {%block content%} 
-<div class="bg-light">
+<main>
+  <div class="container">
 
-    <div class="container">
-      <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-        <h2>Форма Регистраций</h2>
-        <!-- <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p> -->
+    <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+            <div class="d-flex justify-content-center py-4">
+              <a href="index.html" class="logo d-flex align-items-center w-auto">
+                <img src="assets/img/logo.png" alt="">
+                <span class="d-none d-lg-block">QazDrive</span>
+              </a>
+            </div><!-- End Logo -->
+
+            <div class="card mb-3">
+
+              <div class="card-body">
+
+                <div class="pt-4 pb-2">
+                  <h5 class="card-title text-center pb-0 fs-4">Создать аккаунт</h5>
+                  <p class="text-center small">Введите персональные данные чтобы создать аккаунт</p>
+                </div>
+
+                <form class="row g-3 needs-validation" method="POST">
+                  {% csrf_token %}
+                  <div class="col-12">
+                    <label for="yourName" class="form-label">Имя</label>
+                    {{form.first_name}}
+                    <div class="invalid-feedback">Пожалуйста, введите имя!</div>
+                  </div>
+                  <div class="col-12">
+                    <label for="yourName" class="form-label">Фамилия</label>
+                    {{form.last_name}}
+                    <div class="invalid-feedback">Пожалуйста, введите фамилию!</div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="yourUsername" class="form-label">Email</label>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text" id="inputGroupPrepend" style="width: 12%;">@</span>
+                      <div class="form-control1" style="width: 88%;">
+                         {{form.email}}
+                      </div>
+                     
+                      <div class="invalid-feedback">Пожалуйста введите электронную почту!</div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label for="yourName" class="form-label">Выберите город</label>
+                    {{form.city}}
+                    
+                  </div>
+                  <div class="col-12">
+                    <label for="yourPassword" class="form-label">Пароль</label>
+                    <div class="form-control1">
+                      {{form.password1}}
+                    </div>
+                    <div class="invalid-feedback">Пожалуйста введите пароь!</div>
+                  </div>
+                  <div class="col-12">
+                    <label for="yourPassword" class="form-label">Повторите пароль</label>
+                    <div class="form-control1">
+                      {{form.password2}}
+                    </div>
+                    <div class="invalid-feedback">Пожалуйста введите пароь!</div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="form-check">
+                      <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
+                      <label class="form-check-label" for="acceptTerms">Я согласен и принимаю <a href="#">условия</a></label>
+                      <div class="invalid-feedback">Вы должны согласиться перед регистрацией.</div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <button class="btn btn-primary w-100" type="submit">Зарегистрироваться</button>
+                  </div>
+                  <div class="col-12">
+                    <p class="small mb-0">У вас уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+                  </div>
+                </form>
+                {{ form.errors }}
+              </div>
+            </div>
+
+            
+
+          </div>
+        </div>
       </div>
 
-      <div class="row">
+    </section>
 
-        <form class="form-signin" method="POST">
-          {% csrf_token %}
+  </div>
+</main>
+<div class="bg-light">
 
-          <div class="col-md-8 order-md-1">
-            
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  {{form.first_name.label}}
-                  {{form.first_name}}
-                  <div class="invalid-feedback">
-                    Требуется действительное имя.
-                  </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                  {{form.last_name.label}}
-                  {{form.last_name}}
-                  <div class="invalid-feedback">
-                    Требуется действительная фамилия.
-                  </div>
-                </div>
-              </div>
-  
-              <div class="col-md-6 mb-3 form-control1 form-control1">
-                {{form.email.label}}
-                {{form.email}}
-                <div class="invalid-feedback">
-                  Пожалуйста, введите действительный адрес электронной почты.
-                </div>
-              </div>
-                <div class="col-md-6 mb-3">
-                  {{form.city.label}}
-                  {{form.city}}
-                  <div class="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
-                </div>
-  
-                <div class="col-md-6 mb-3 form-control1">
-                  {{form.password1.label}}
-                  {{form.password1}}
-                  <div class="invalid-feedback">
-                    Valid first name is Password.
-                  </div>
-                </div>
-  
-                <div class="col-md-6 mb-3 form-control1">
-                  {{form.password2.label}}
-                  {{form.password2}}
-                  <div class="invalid-feedback">
-                    Valid first name is Password.
-                  </div>
-                </div>
-                
-          </div>
-              <hr class="mb-4">
-
-        
-
-          <div class="checkbox mb-3"> 
-          </div>
-          <div class="text-center">
-            <button class="btn btn-lg btn-primary btn-block" type="submit" style="width: 100%">Зарегистрировать</button>
-          <p class="mt-5 mb-3 text-muted">&copy; Qaz Testing</p>
-          </div>
-        </form>
-        {{ form.errors }}
-
-    </div>
+    
     
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -125,4 +145,4 @@
     </script>
   </div>
   {%endblock%} {%block boots%} {%endblock%}
-</div>
+
