@@ -1,118 +1,206 @@
-{% extends 'base.html'%}
 {% load static %}
-{% block content %} 
-<div class="container">
-    <div align="right " id="displaytimer"><b>Timer: 0 seconds</b></div>
-
-    <form method='post' action=''>
-        {% csrf_token %}
-        <div class="mainform" id="mainform">
-        {% for q in page_obj %}
-        
-            <div class="form-group">
-                <label for="question">{{q.question_text}}</label>
-                <img src="{{q.url_image}}" alt="">
-            </div>
-
-            <div class="form-check">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="{{q.question_text}}" id="gridRadios1" value="{{q.answer1}}" checked>
-                    <label class="form-check-label" for="gridRadios1">
-                    {{q.answer1}}
-                    </label>
-                </div>
-
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="{{q.question_text}}" id="gridRadios2" value="{{q.answer2}}">
-                    <label class="form-check-label" for="gridRadios2">
-                    {{q.answer2}}
-                    </label>
-                </div>
-
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="{{q.question_text}}" id="gridRadios3" value="{{q.answer3}}">
-                    <label class="form-check-label" for="gridRadios3">
-                    {{q.answer3}}
-                    </label>
-                </div>
-
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="{{q.question_text}}" id="gridRadios4" value="{{q.answer4}}">
-                    <label class="form-check-label" for="gridRadios4">
-                    {{q.answer4}}
-                    </label>
-                </div>
-
-                <br>
-            </div>  
-        
-        {% endfor %}
-        </div>
-
-        <nav aria-label="Page navigation example" id="pagination"> 
-            <ul class="pagination">
-                {% for i in page_obj.paginator.page_range %}
-                {% if page_obj.number == i %}
-                <li class="page-item active"><a class="page-link" href="{{ request.path }}?page={{ i }}">{{i}}</a></li>
-                <!-- <li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{forloop.counter}}</a></li> -->
-                {% else %}
-                <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ i }}">{{i}}</a></li>
-                {% endif %}
-                {% endfor %}
-            </ul>
-        </nav>
-        
-        <input id='timer' type='hidden' name="timer" value="">
-        <br>
-        <button type="submit" class="btn btn-primary">Завершить</button>
-
-      </form>
-
+<link rel="stylesheet" href="{%static 'main/css/quiz.css'%}" />
+<main class="quiz-container">
+  <header class="quiz__header">
+    <div class="quiz__header-left">
+      <p>Тест №123</p>
+      <span>Тест категория А</span>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script type="text/javascript">
+    <div class="quiz__header-right">
+      
+    </div>
+  </header>
+  <nav class="pagination-container">
+    
 
-        // console.log('hello world')
-        const timer=document.getElementById('displaytimer')
-        // console.log(timer.textContent)
-        const inputtag = document.getElementById('timer')
+    <div id="pagination-numbers"></div>
 
-        t=0
-        setInterval(()=>{
-            t+=1
-            timer.innerHTML ="<b>Timer: " +t+" seconds</b>"
-            inputtag.value = t
-        },1000)
+    
+  </nav>
+  <div class="container">
+  <form method="post" action="">
+    {% csrf_token %}
+    <ul id="paginated-list" data-current-page="1" aria-live="polite">
+      {% for q in questions %}
+      <li>
+        <label for="question" class="quiz-title">{{q.question_text}}</label>
+        <div class="quiz_block">
+          <div class="quiz-question">
+            <img src="{%static 'main/347.jpg'%}" class="quiz-img" alt="" />
+          </div>
+          <div class="answer_block">
+            <div class="form_radio_btn">
+              <input
+                type="radio"
+                name="{{q.question_text}}"
+                id="gridRadios1"
+                value="{{q.answer1}}"
+              />
+              <label class="form-check-label" for="gridRadios1">
+              {{q.answer1}}
+              </label>
+            </div>
+            <div class="form_radio_btn">
+              <input
+                type="radio"
+                name="{{q.question_text}}"
+                id="gridRadios2"
+                value="{{q.answer2}}"
+              />
+              <label class="form-check-label" for="gridRadios2">
+                {{q.answer2}}
+              </label>
+            </div>
+            <div class="form_radio_btn">
+              <input
+                type="radio"
+                name="{{q.question_text}}"
+                id="gridRadios3"
+                value="{{q.answer3}}"
+              />
+              <label class="form-check-label" for="gridRadios3">
+               {{q.answer3}}
+              </label>
+            </div>
+            <div class="form_radio_btn">
+              <input
+                type="radio"
+                name="{{q.question_text}}"
+                id="gridRadios4"
+                value="{{q.answer4}}"
+              />
+              <label class="form-check-label" for="gridRadios4">
+                {{q.answer4}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </li>
+      {%endfor%}
+    </ul>
+    <button class="quiz-end-btn" type="submit">Завершть тест</button>
+  </form>
+  <div class="pag-btns">
+    <div class="pag-btns-inner">
+      <button
+      class="pagination-button-pag"
+      id="prev-button"
+      aria-label="Previous page"
+      title="Previous page"
+    >
+      Предыдущий вопрос
+    </button>
+    <button
+      class="pagination-button-pag"
+      id="next-button"
+      aria-label="Next page"
+      title="Next page"
+    >
+      Следующий вопрос
+    </button>
+    </div>
+  </div>
+</div>
 
-        function ajaxPagination() {
-            $('#pagination a.page-link').each((index, el) => {
-                $(el).click((e) => {
-                    e.preventDefault()
-                    let page_url = $(el).attr('href')
-                    console.log(page_url)
+</main>
+<script>
+  const paginationNumbers = document.getElementById("pagination-numbers");
+  const paginatedList = document.getElementById("paginated-list");
+  const listItems = paginatedList.querySelectorAll("li");
+  const nextButton = document.getElementById("next-button");
+  const prevButton = document.getElementById("prev-button");
 
-                    $.ajax({
-                        url: page_url,
-                        type: 'GET',
-                        success: (data) => {
-                            $('#mainform').empty()
-                            $('#mainform').append($(data).filter('#mainform').html)
+  const paginationLimit = 1;
+  const pageCount = Math.ceil(listItems.length / paginationLimit);
+  let currentPage = 1;
 
-                            $('#pagination').empty()
-                            $('#pagination').append($(data).filter('#pagination').html)
-                        }
-                    })
-                })
-            })
-        }
-        
-        // $(document).ready(function(){
-        //     ajaxPagination()
-        // })
+  const disableButton = (button) => {
+    button.classList.add("disabled");
+    button.setAttribute("disabled", true);
+  };
 
-        // $(document).ajaxStop(function(){
-        //     ajaxPagination()
-        // })
+  const enableButton = (button) => {
+    button.classList.remove("disabled");
+    button.removeAttribute("disabled");
+  };
 
-    </script>
-{% endblock %}
+  const handlePageButtonsStatus = () => {
+    if (currentPage === 1) {
+      disableButton(prevButton);
+    } else {
+      enableButton(prevButton);
+    }
+
+    if (pageCount === currentPage) {
+      disableButton(nextButton);
+    } else {
+      enableButton(nextButton);
+    }
+  };
+
+  const handleActivePageNumber = () => {
+    document.querySelectorAll(".pagination-number").forEach((button) => {
+      button.classList.remove("active");
+      const pageIndex = Number(button.getAttribute("page-index"));
+      if (pageIndex == currentPage) {
+        button.classList.add("active");
+      }
+    });
+  };
+
+  const appendPageNumber = (index) => {
+    const pageNumber = document.createElement("button");
+    pageNumber.className = "pagination-number";
+    pageNumber.innerHTML = index;
+    pageNumber.setAttribute("page-index", index);
+    pageNumber.setAttribute("aria-label", "Page " + index);
+
+    paginationNumbers.appendChild(pageNumber);
+  };
+
+  const getPaginationNumbers = () => {
+    for (let i = 1; i <= pageCount; i++) {
+      appendPageNumber(i);
+    }
+  };
+
+  const setCurrentPage = (pageNum) => {
+    currentPage = pageNum;
+
+    handleActivePageNumber();
+    handlePageButtonsStatus();
+
+    const prevRange = (pageNum - 1) * paginationLimit;
+    const currRange = pageNum * paginationLimit;
+
+    listItems.forEach((item, index) => {
+      item.classList.add("hidden");
+      if (index >= prevRange && index < currRange) {
+        item.classList.remove("hidden");
+      }
+    });
+  };
+
+  window.addEventListener("load", () => {
+    getPaginationNumbers();
+    setCurrentPage(1);
+
+    prevButton.addEventListener("click", () => {
+      setCurrentPage(currentPage - 1);
+    });
+
+    nextButton.addEventListener("click", () => {
+      setCurrentPage(currentPage + 1);
+    });
+
+    document.querySelectorAll(".pagination-number").forEach((button) => {
+      const pageIndex = Number(button.getAttribute("page-index"));
+
+      if (pageIndex) {
+        button.addEventListener("click", () => {
+          setCurrentPage(pageIndex);
+        });
+      }
+    });
+  });
+</script>
