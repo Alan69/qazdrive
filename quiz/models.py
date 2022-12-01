@@ -22,12 +22,13 @@ class Question(models.Model):
         return self.question_text
 
 class Result(models.Model):
+    created = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь")
-    score = models.FloatField(verbose_name="Балл")
+    score = models.CharField(max_length=50,verbose_name="Балл")
 
     def __str__(self):
-        return str(self.category.cat_name) + "-" + self.user.get_full_name() + " " +  str(self.score)
+        return str(self.category.cat_name) + "-" + str(self.user) + " " +  str(self.score)
     
     class Meta:
         verbose_name_plural = 'Результаты'

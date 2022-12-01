@@ -60,16 +60,12 @@ def quiz(request, id):
             'percent':percent,
             'total':total
         }
+        Result.objects.create(category=category.cat_name, user=request.user, score=score)
         return render(request,'quiz/result.html',context)
     else:
         category = Category.objects.get(id = id)
         questions=Question.objects.filter(category = category)
-        paginator = Paginator(Question.objects.filter(category = category), 1)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-        nums = "a" * page_obj.paginator.num_pages
         context = {
-        'page_obj':page_obj,
-        'nums': nums
+        'questions':questions
         }
         return render(request,'quiz/quiz.html', context)

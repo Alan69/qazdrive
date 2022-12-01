@@ -27,6 +27,7 @@ urlpatterns = [
     path('profile/', include('myprofile.urls')),
     path('payments/', include('payments.urls')),
     path('quiz/', include('quiz.urls')),
+    path('subs_request/', include('subs_request.urls')),
 
     path(
         "favicon.ico",

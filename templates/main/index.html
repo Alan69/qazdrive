@@ -141,15 +141,17 @@
                   </tr>
                 </thead>
                 <tbody>
+                  {% for r in result %}
                   <tr>
-                    <th scope="row"><a href="#">1</a></th>
-                    <td>04.11.2022</td>
-                    <td><a href="#" class="text-primary">B1, B2</a></td>
+                    <th scope="row"><a href="#">{{r.id}}</a></th>
+                    <td>{{r.created}}</td>
+                    <td><a href="#" class="text-primary">{{r.category}}</a></td>
                     <td>Руский</td>
-                    <td>36/40</td>
+                    <td>{{r.score}}/40</td>
                     <td><span class="badge bg-success">Завершен</span></td>
                   </tr>
-                  <tr>
+                  {% endfor %}
+                  <!-- <tr>
                     <th scope="row"><a href="#">3</a></th>
                     <td>01.11.2022</td>
                     <td><a href="#" class="text-primary">Tmp</a></td>
@@ -172,7 +174,7 @@
                     <td>Руский</td>
                     <td>14/40</td>
                     <td><span class="badge bg-warning">Время истекло</span></td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
   

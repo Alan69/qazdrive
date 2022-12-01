@@ -1,6 +1,11 @@
 from django.shortcuts import render
+from quiz.models import Result
 
 # Create your views here.
 def index(request):
-    return render(request, 'main/index.html')
+    result = Result.objects.filter(user = request.user)
+    context = {
+        'result':result
+    }
+    return render(request, 'main/index.html', context)
     
