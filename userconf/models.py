@@ -59,6 +59,7 @@ CITIES = (
     ('Zhezgazgan', 'Жезказган'),
     ('Oral', 'Орал'),
     ('Taldykorgan', 'Талдыкорган'),
+    ('Turkestan', 'Туркестан'),
      )
 
 class User(AbstractBaseUser, PermissionsMixin):

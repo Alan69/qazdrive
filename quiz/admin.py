@@ -40,3 +40,4 @@ admin.site.register(Question, QuestionAdmin)
 # admin.site.register(Answer, AnswerAdmin)
 admin.site.register(Category)
 admin.site.register(Result)
+
