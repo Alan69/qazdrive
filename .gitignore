@@ -23,23 +23,5 @@ migrations/
 *.log
 *.pot
 *.pyc
-.Python build/ 
-develop-eggs/ 
-dist/ 
-downloads/ 
-eggs/ 
-.eggs/ 
-lib/ 
-lib64/ 
-parts/ 
-sdist/ 
-var/ 
-wheels/ 
-*.egg-info/ 
-.installed.cfg 
-*.egg 
-*.manifest 
-*.spec 
-pip-log.txt 
-pip-delete-this-directory.txt
+.Python build/  
 sftp-config.json
