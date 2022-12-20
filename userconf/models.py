@@ -72,6 +72,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_subscribed = models.BooleanField(default=False)
     forget_password_token = models.CharField(max_length=100, null=True)
     payment_id = models.IntegerField(verbose_name="ID оплаты каспи", null=True, default=0)
+    pddtest_pass = models.CharField(max_length=255, null=True, blank=True, default=None)
     
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

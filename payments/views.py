@@ -8,6 +8,12 @@ from userconf.models import User
 
 def post_order(request, product, sum):
     url = 'https://qazdrivekaspi.kz/api/orders'
+
+    with requests.Session() as session:
+        session.headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+        session.headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0'
+        session.get(url)
+    
     customer = request.user.first_name + " " + request.user.last_name
     customer_id = request.user.id
 

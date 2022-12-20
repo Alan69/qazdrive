@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-mvm$o(+)gc%j@&s_i&sej)+k#1zz0t!f9ufx8r^+c4cj(i85eo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['.qaztesting.kz']
 

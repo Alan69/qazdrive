@@ -4,31 +4,28 @@
 {% block content %} 
 {%include 'components/menu.html'%} 
 <main id="main" class="main">
-    <div class="row">
-        <div class="col-4">
-            <select name="categorys" id="categorys" class="form-control" style="cursor: pointer;">
-                <option selected>Выбрать категорию</option>
-                {% for c in category %}
-                <option>{{ c.cat_name }}</option>
-                {% endfor %}
-            </select>
-        </div>
     </div>
     <button type="button" class="btn btn-primary text-white" style="margin-top: 20px;"  data-bs-toggle="modal" data-bs-target="#exampleModal">Начать тестирование</button>
 
     <div class="modal  fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
+            <div class="kaspi__cheque-info">
+              <div class="kaspi__cheque-text for-cheque">Email:</div>
+              <div class="kaspi__cheque-text">{{request.user.email}}</div>
+            </div>
+            <div class="kaspi__cheque-info">
+              <div class="kaspi__cheque-text for-cheque">Пароль:</div>
+              <!-- <div class="kaspi__cheque-text">{{request.user.pddtest_pass}}</div> -->
+              <div class="kaspi__cheque-text">{{responce.data.password}}</div>
+            </div>
             
-
-      
-        
             <div class="modal-body">
               Вы уверены что хотите начать тестирование?
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-              <button type="button" class="btn btn-primary" id="bpm">Начать</button>
+              <button type="button" class="btn btn-primary" id="bpm"> <a href="https://pddtest.kz/auth" style="color: white;">Начать</a></button>
             </div>
           </div>
         </div>
