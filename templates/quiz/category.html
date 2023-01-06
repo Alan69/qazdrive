@@ -16,10 +16,14 @@
             </div>
             <div class="kaspi__cheque-info">
               <div class="kaspi__cheque-text for-cheque">Пароль:</div>
-              <!-- <div class="kaspi__cheque-text">{{request.user.pddtest_pass}}</div> -->
-              <div class="kaspi__cheque-text">{{responce.data.password}}</div>
+              <div class="kaspi__cheque-text">{{request.user.pddtest_pass}}</div>
             </div>
-            
+            <script>window.onload = function() {
+              if(!window.location.hash) {
+                  window.location = window.location + '#loaded';
+                  window.location.reload();
+              }
+          }</script>
             <div class="modal-body">
               Вы уверены что хотите начать тестирование?
             </div>
@@ -31,6 +35,51 @@
         </div>
       </div>
 </main>
+
+<script type="text/javascript">
+  const loginUrl = 'https://api.pddtest.kz/auth/authorize';
+  const username = '{{request.user.email}}';
+  const password = '{{request.user.pddtest_pass}}';
+
+  // Send a POST request to the login endpoint with the username and password
+  fetch(loginUrl, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  body: new URLSearchParams({
+    username: username,
+    password: password
+  })
+})
+  .then(response => response.json())
+  .then(data => {
+    // Extract the bearer token from the response
+    const token = data.token;
+
+    // Set the authorization header
+    const headers = {
+      Authorization: `Bearer ${token}`
+    };
+
+    // Send a GET request to the protected endpoint with the authorization header
+    return fetch('https://api.pddtest.kz/auth/authorize', {
+      headers: headers
+    });
+  })
+  .then(response => response.text())
+  .then(text => {
+    // Check if the request was successful
+    if (response.status === 200) {
+      // The request was successful. You can now use the response text to display the protected content
+      console.log(text);
+    } else {
+      // The request was unsuccessful. Display an error message
+      console.error('Error: Unauthorized');
+    }
+  });
+</script>
+
 {% endblock %}
 {%block ownjs%} 
 

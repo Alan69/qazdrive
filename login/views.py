@@ -49,7 +49,6 @@ def logoutPage(request):
 def ChangePassword(request , token):
     context = {}
     
-    
     try:
         profile_obj = Profile.objects.filter(forget_password_token = token).first()
         context = {'user_id' : profile_obj.user.id}
@@ -73,7 +72,6 @@ def ChangePassword(request , token):
             user_obj.set_password(new_password)
             user_obj.save()
             return redirect('login')
-            
             
     except Exception as e:
         print(e)

@@ -22,8 +22,8 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('main/', include('main.urls')),
-    path('', include('login.urls')),
+    path('', include('main.urls')),
+    path('login/', include('login.urls')),
     path('profile/', include('myprofile.urls')),
     path('payments/', include('payments.urls')),
     path('quiz/', include('quiz.urls')),

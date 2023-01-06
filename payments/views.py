@@ -1,19 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import requests
 from urllib3.exceptions import InsecureRequestWarning
 from urllib3 import disable_warnings
 from django.http import HttpResponse
 import json
 from userconf.models import User
+from subs_request.models import SubRequest
+import datetime
+from django.contrib import messages
 
 def post_order(request, product, sum):
     url = 'https://qazdrivekaspi.kz/api/orders'
-
-    with requests.Session() as session:
-        session.headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-        session.headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0'
-        session.get(url)
-    
+    today_date = datetime.datetime.now().date
+    start_date = datetime.datetime.now() + datetime.timedelta(30)
     customer = request.user.first_name + " " + request.user.last_name
     customer_id = request.user.id
 
@@ -33,13 +32,29 @@ def post_order(request, product, sum):
         parsed = response.json()
 
         currunt_user = User.objects.filter(id = request.user.id).first()
-        currunt_user.payment_id = parsed['data']['id']
-        currunt_user.save()
+        
     else:
         print('conditions not met')
-    return render(request, 'payments/post_order.html', { "response": response.json()} )
+    
+    # if request.user.tarif_expire_date == today_date:
+    if request.user.pddtest_pass == None:
+    # if parsed['data']['id'] == None:
+        currunt_user.payment_id = parsed['data']['id']
+        currunt_user.tarif_name = product
+        currunt_user.tarif_expire_date = start_date
+        currunt_user.save()
+        return render(request, 'payments/post_order.html', { "response": response.json()})
+    else:
+        messages.success(request, 'У вас есть активный тариф')
+        return redirect('index')
 
+# отправка заявки для партнеров
+def send_subs_req(request, subsname):
+    SubRequest.objects.create(user=request.user, subscription_name=subsname)
+    messages.success(request, 'Ваша заявка принята')
+    return redirect('index')
 
+#для проверки оплаты
 def check_order(request):
     kaspi_id = request.user.payment_id
     url = f'https://qazdrivekaspi.kz/api/orders/{kaspi_id}'

@@ -46,9 +46,9 @@ def get_orders():
 
 # get_orders()
 
-def check_order():
+def check_order(kaspi_id):
     # kaspi_id = request.user.payment_id
-    url = 'http://qazdrivekaspi.kz/api/orders/48'
+    url = f'http://qazdrivekaspi.kz/api/orders/{kaspi_id}'
     response = requests.get(url)
 
     if (response.status_code != 204

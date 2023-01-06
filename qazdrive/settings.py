@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,9 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-mvm$o(+)gc%j@&s_i&sej)+k#1zz0t!f9ufx8r^+c4cj(i85eo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['.qaztesting.kz']
+ALLOWED_HOSTS = ["*"]
+
 
 # Application definition
 
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'tarif',
     'quiz',
     'import_export',
+    'subs_request',
 ]
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
@@ -130,10 +131,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'
-# STATICFILES_DIRS=[
-#     BASE_DIR / 'static',
-# ]
+STATICFILES_DIRS=[
+    BASE_DIR / 'static',
+]
 
 MEDIA_ROOT = BASE_DIR / 'media' # media directory in the root directory
 MEDIA_URL = '/media/'

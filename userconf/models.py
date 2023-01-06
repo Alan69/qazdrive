@@ -71,8 +71,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_have_tarif = models.BooleanField(default=False)
     is_subscribed = models.BooleanField(default=False)
     forget_password_token = models.CharField(max_length=100, null=True)
-    payment_id = models.IntegerField(verbose_name="ID оплаты каспи", null=True, default=0)
+    payment_id = models.IntegerField(verbose_name="ID оплаты каспи", null=True, blank=True, default=None)
     pddtest_pass = models.CharField(max_length=255, null=True, blank=True, default=None)
+    tarif_name = models.CharField(max_length=255, null=True, blank=True)
+    tarif_expire_date = models.DateField(null=True, blank=True)
     
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
