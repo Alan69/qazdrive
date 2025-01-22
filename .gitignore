@@ -18,10 +18,18 @@ env.bak/
 venv.bak/
 /__pycache__
 __pycache__/
-migrations/
-/migrations
 *.log
 *.pot
 *.pyc
 .Python build/  
 sftp-config.json
+staticfiles/
+debug.log
+/staticfiles
+**/__pycache__/
+/venv
+*/migrations/[!__init__]*.py
+/app
+/static
+nohup.out
+/media/*

@@ -1,8 +1,7 @@
-from django.urls import  path
-from .views import category, quiz
+from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('', category, name='category'),
-    path('<id>/', quiz, name='quiz'),
-    # path('auth_to_pdd/', auth_to_pdd, name='auth_to_pdd'),
+    path('categories/', views.category, name='categories'),
+    path('<int:category_id>/', views.quiz, name='quiz'),
 ]

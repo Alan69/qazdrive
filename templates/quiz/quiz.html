@@ -1,108 +1,58 @@
 {% load static %}
-<link rel="stylesheet" href="{%static 'main/css/quiz.css'%}" />
-<main class="quiz-container">
-  <header class="quiz__header">
-    <div class="quiz__header-left">
-      <p>Тест №123</p>
-      <span>Тест категория А</span>
-    </div>
-    <div class="quiz__header-right">
-      
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+
+<main class="container py-5">
+  <header class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h4>Тест №{{ category.id }}</h4>
+      <span class="badge bg-primary">Тест категория {{ category.cat_name }}</span>
     </div>
   </header>
-  <nav class="pagination-container">
-    
 
-    <div id="pagination-numbers"></div>
-
-    
+  <nav class="d-flex justify-content-center mb-4">
+    <div id="pagination-numbers" class="pagination"></div>
   </nav>
-  <div class="container">
-  <form method="post" action="">
-    {% csrf_token %}
-    <ul id="paginated-list" data-current-page="1" aria-live="polite">
-      {% for q in questions %}
-      <li>
-        <label for="question" class="quiz-title">{{q.question_text}}</label>
-        <div class="quiz_block">
-          <div class="quiz-question">
-            <img src="{%static 'main/347.jpg'%}" class="quiz-img" alt="" />
-          </div>
-          <div class="answer_block">
-            <div class="form_radio_btn">
-              <input
-                type="radio"
-                name="{{q.question_text}}"
-                id="gridRadios1"
-                value="{{q.answer1}}"
-              />
-              <label class="form-check-label" for="gridRadios1">
-              {{q.answer1}}
-              </label>
+
+  <div class="card">
+    <div class="card-body">
+      <form method="post" action="">
+        {% csrf_token %}
+        <ul id="paginated-list" data-current-page="1" aria-live="polite" class="list-unstyled">
+          {% for q in questions %}
+          <li class="d-none">
+            <h5 class="mb-3">{{ q.question_text }}</h5>
+            {% if q.url_image != "None" %}
+            <img src="{{ q.url_image }}" class="img-fluid mb-3" alt="Question Image">
+            {% endif %}
+            <div class="form-check">
+              <input type="radio" name="{{ q.question_text }}" id="answer1_{{ forloop.counter }}" value="{{ q.answer1 }}" class="form-check-input">
+              <label class="form-check-label" for="answer1_{{ forloop.counter }}">{{ q.answer1 }}</label>
             </div>
-            <div class="form_radio_btn">
-              <input
-                type="radio"
-                name="{{q.question_text}}"
-                id="gridRadios2"
-                value="{{q.answer2}}"
-              />
-              <label class="form-check-label" for="gridRadios2">
-                {{q.answer2}}
-              </label>
+            <div class="form-check">
+              <input type="radio" name="{{ q.question_text }}" id="answer2_{{ forloop.counter }}" value="{{ q.answer2 }}" class="form-check-input">
+              <label class="form-check-label" for="answer2_{{ forloop.counter }}">{{ q.answer2 }}</label>
             </div>
-            <div class="form_radio_btn">
-              <input
-                type="radio"
-                name="{{q.question_text}}"
-                id="gridRadios3"
-                value="{{q.answer3}}"
-              />
-              <label class="form-check-label" for="gridRadios3">
-               {{q.answer3}}
-              </label>
+            <div class="form-check">
+              <input type="radio" name="{{ q.question_text }}" id="answer3_{{ forloop.counter }}" value="{{ q.answer3 }}" class="form-check-input">
+              <label class="form-check-label" for="answer3_{{ forloop.counter }}">{{ q.answer3 }}</label>
             </div>
-            <div class="form_radio_btn">
-              <input
-                type="radio"
-                name="{{q.question_text}}"
-                id="gridRadios4"
-                value="{{q.answer4}}"
-              />
-              <label class="form-check-label" for="gridRadios4">
-                {{q.answer4}}
-              </label>
+            <div class="form-check">
+              <input type="radio" name="{{ q.question_text }}" id="answer4_{{ forloop.counter }}" value="{{ q.answer4 }}" class="form-check-input">
+              <label class="form-check-label" for="answer4_{{ forloop.counter }}">{{ q.answer4 }}</label>
             </div>
-          </div>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="d-flex justify-content-between mt-4">
+          <button class="btn btn-primary" id="prev-button" disabled>Предыдущий вопрос</button>
+          <button class="btn btn-primary" id="next-button">Следующий вопрос</button>
         </div>
-      </li>
-      {%endfor%}
-    </ul>
-    <button class="quiz-end-btn" type="submit">Завершть тест</button>
-  </form>
-  <div class="pag-btns">
-    <div class="pag-btns-inner">
-      <button
-      class="pagination-button-pag"
-      id="prev-button"
-      aria-label="Previous page"
-      title="Previous page"
-    >
-      Предыдущий вопрос
-    </button>
-    <button
-      class="pagination-button-pag"
-      id="next-button"
-      aria-label="Next page"
-      title="Next page"
-    >
-      Следующий вопрос
-    </button>
+        <button type="submit" class="btn btn-success w-100 mt-4">Завершить тест</button>
+      </form>
     </div>
   </div>
-</div>
-
 </main>
+
 <script>
   const paginationNumbers = document.getElementById("pagination-numbers");
   const paginatedList = document.getElementById("paginated-list");
@@ -115,12 +65,10 @@
   let currentPage = 1;
 
   const disableButton = (button) => {
-    button.classList.add("disabled");
     button.setAttribute("disabled", true);
   };
 
   const enableButton = (button) => {
-    button.classList.remove("disabled");
     button.removeAttribute("disabled");
   };
 
@@ -150,7 +98,7 @@
 
   const appendPageNumber = (index) => {
     const pageNumber = document.createElement("button");
-    pageNumber.className = "pagination-number";
+    pageNumber.className = "btn btn-outline-primary mx-1 pagination-number";
     pageNumber.innerHTML = index;
     pageNumber.setAttribute("page-index", index);
     pageNumber.setAttribute("aria-label", "Page " + index);
@@ -174,9 +122,9 @@
     const currRange = pageNum * paginationLimit;
 
     listItems.forEach((item, index) => {
-      item.classList.add("hidden");
+      item.classList.add("d-none");
       if (index >= prevRange && index < currRange) {
-        item.classList.remove("hidden");
+        item.classList.remove("d-none");
       }
     });
   };

@@ -28,12 +28,12 @@ urlpatterns = [
     path('payments/', include('payments.urls')),
     path('quiz/', include('quiz.urls')),
     path('subs_request/', include('subs_request.urls')),
-    path('api/', include('userconf.urls')),
+    # path('api/', include('userconf.urls')),
 
-    path(
-        "favicon.ico",
-        RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")),
-    ),
+    # path(
+    #     "favicon.ico",
+    #     RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")),
+    # ),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
