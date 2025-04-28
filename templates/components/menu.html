@@ -6,7 +6,7 @@
       <a href="{%url 'index'%}" class="logo d-flex align-items-center">
 
         <span class="d-none d-lg-block"><img src="{% static 'logo/logoqaztest@2x.png' %}" style="width: 25px!important; height: auto" alt=""></span>
-        <span class="d-none d-lg-block">QazTesting</span>
+        <span class="d-none d-lg-block">SapaPDD</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -64,7 +64,7 @@
       {%if request.path == '/quiz/'%}
       {% else %}
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'categories' %}">
+        <a class="nav-link collapsed" href="{% url 'category' %}">
           <i class="ri-pencil-ruler-2-fill"></i>
           <span>Начать тестирование</span>
         </a>

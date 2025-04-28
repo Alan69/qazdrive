@@ -67,6 +67,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=250, verbose_name="Имя")
     last_name = models.CharField(max_length=250, verbose_name="Фамилия")
     city = models.CharField(max_length=250, choices=CITIES, verbose_name="Выберите город")
+    category = models.ForeignKey('quiz.Category', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Категория")
     number = models.CharField(max_length=12, null=True, blank=True)
     is_have_tarif = models.BooleanField(default=False)
     is_subscribed = models.BooleanField(default=False)

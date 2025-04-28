@@ -1,38 +1,109 @@
 {% extends 'base.html'%}
 {% load static %}
-{% block content %} 
-<div class="container">
-    <h2>Ваши результаты</h2>
-          </table>
-          <table class="table" style="width: 100% !important">
-            <thead>
-              <tr>
-                <th class="text-left">Баллов</th>
-                <th class="text-left">{{percent}}</th>
-              </tr>
-            </thead>
-            <tbody class="table-hover">
-              <tr>
-                <td class="text-left">Затраченное время</td>
-                <td class="text-left">{{time}} секунд</td>
-              </tr>
-              <tr>
-                <td class="text-left">Правильных ответов</td>
-                <td class="text-left">{{correct}}</td>
-              </tr>
-              <tr>
-                <td class="text-left">Неправильных ответов</td>
-                <td class="text-left">{{wrong}}</td>
-              </tr>
-              <tr>
-                <td class="text-left">Общее количество вопросов</td>
-                <td class="text-left">{{total}}</td>
-              </tr>
-            </tbody>
-      
-          </table>
-           <div class="text-center mt-4">
-              <a href="{%url 'index'%}" class="btn btn-primary">На главную</a>
-          </div>
-</div>
+{% block content %}
+{%include 'components/menu.html'%}
+<main id="main" class="main">
+    <div class="result-container">
+        <h1>Результаты теста</h1>
+        <div class="result-card">
+            <div class="result-item">
+                <span class="result-label">Правильных ответов:</span>
+                <span class="result-value">{{ correct }} из {{ total }}</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Неправильных ответов:</span>
+                <span class="result-value">{{ wrong }} из {{ total }}</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Процент правильных ответов:</span>
+                <span class="result-value">{{ percent|floatformat:1 }}%</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Набранные баллы:</span>
+                <span class="result-value">{{ score }}</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Затраченное время:</span>
+                <span class="result-value">{{ time }}</span>
+            </div>
+        </div>
+        <div class="result-actions">
+            <a href="{% url 'category' %}" class="btn btn-primary">Пройти тест снова</a>
+            <a href="/" class="btn btn-secondary">Вернуться на главную</a>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block owncss %}
+<style>
+    .result-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .result-card {
+        background: white;
+        border-radius: 8px;
+        padding: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin: 2rem 0;
+    }
+
+    .result-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .result-item:last-child {
+        border-bottom: none;
+    }
+
+    .result-label {
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    .result-value {
+        font-size: 1.1rem;
+    }
+
+    .result-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 0.8rem 2rem;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+</style>
 {% endblock %}
