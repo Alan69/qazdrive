@@ -6,7 +6,7 @@ db.sqlite3
 !.vscode/tasks.json 
 !.vscode/launch.json 
 !.vscode/extensions.json 
-media
+# media
 .history
 /env
 .env 
@@ -32,4 +32,4 @@ debug.log
 /app
 /static
 nohup.out
-/media/*
+# /media/*
