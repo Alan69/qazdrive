@@ -13,15 +13,15 @@ class Command(BaseCommand):
             updated_count = 0
             for question in questions:
                 if question.image_path:
-                    # Remove any existing http://localhost:8000/media/ prefix if it exists
+                    # Remove any existing https://sapapdd.kz/media/ prefix if it exists
                     path = question.image_path
-                    if path.startswith('http://localhost:8000/media/'):
-                        path = path.replace('http://localhost:8000/media/', '')
+                    if path.startswith('https://sapapdd.kz/media/'):
+                        path = path.replace('https://sapapdd.kz/media/', '')
                     if path.startswith('images/images/'):
                         path = path.replace('images/images/', 'images/')
                     
                     # Add the full URL
-                    new_path = f'http://localhost:8000/media/{path}'
+                    new_path = f'https://sapapdd.kz/media/{path}'
                     
                     # Update the question
                     question.image_path = new_path
