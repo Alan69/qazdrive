@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ video.title }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* YouTube-like video container */
+    .video-container {
+        position: relative;
+        width: 100%;
+        max-width: 850px;
+        margin: 0 auto;
+        padding-top: 0; /* Remove padding-top to use fixed height */
+        height: 480px; /* YouTube standard height */
+        background-color: #000;
+    }
+    .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background-color: #000;
+        object-fit: contain; /* Ensures proper scaling */
+    }
+    /* YouTube-like sidebar */
+    .video-sidebar {
+        max-height: 480px;
+        overflow-y: auto;
+        border-radius: 0;
+    }
+    .video-sidebar-item {
+        transition: all 0.1s;
+        padding: 10px;
+        border-left: none !important;
+        border-radius: 0;
+    }
+    .video-sidebar-item:hover {
+        background-color: #f0f0f0;
+    }
+    .video-sidebar-item.active {
+        background-color: #e6e6e6;
+        font-weight: 500;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+        .video-container {
+            height: 360px; /* Smaller height on tablets */
+        }
+    }
+    @media (max-width: 576px) {
+        .video-container {
+            height: 240px; /* Even smaller height on phones */
+        }
+    }
+    /* YouTube-like card styling */
+    .video-card {
+        border-radius: 0;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+    }
+    .video-title {
+        font-weight: 500;
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="row">
+        <!-- Main Video Column -->
+        <div class="col-lg-9">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'courses:course_list' %}">Курсы</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'courses:course_detail' course.id %}?language={{ video.language }}">{{ course.title }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ video.title }}</li>
+                </ol>
+            </nav>
+            
+            <div class="card shadow-sm mb-4">
+                <div class="card-body p-0">
+                    <div class="video-container">
+                        <video id="videoPlayer" controls preload="metadata" class="w-50">
+                            <source src="{{ video.video_file.url }}" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                </div>
+                <div class="card-footer bg-white">
+                    <h4 class="mb-2">{{ video.title }}</h4>
+                    <p class="text-muted">
+                        Язык: {{ video.get_language_display }}
+                        {% if video.duration %}
+                        <span class="ms-3"><i class="bi bi-clock me-1"></i>{{ video.duration }}</span>
+                        {% endif %}
+                    </p>
+                    
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div>
+                            {% if prev_video %}
+                            <a href="{% url 'courses:video_detail' prev_video.id %}" class="btn btn-outline-primary me-2">
+                                <i class="bi bi-arrow-left me-1"></i> Предыдущее
+                            </a>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% if video.progress.is_completed %}
+                            <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Просмотрено</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% if next_video %}
+                            <a href="{% url 'courses:video_detail' next_video.id %}" class="btn btn-primary">
+                                Следующее <i class="bi bi-arrow-right ms-1"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Описание</h5>
+                </div>
+                <div class="card-body">
+                    <p>{{ video.description|linebreaks }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar Column -->
+        <div class="col-lg-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Другие видео в этом курсе</h5>
+                </div>
+                <div class="list-group list-group-flush video-sidebar">
+                    {% for v in course_videos %}
+                    <a href="{% url 'courses:video_detail' v.id %}" class="list-group-item list-group-item-action video-sidebar-item {% if v.id == video.id %}active{% endif %}">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">{{ v.title }}</h6>
+                            {% if v.progress.is_completed %}
+                            <span class="text-success"><i class="bi bi-check-circle"></i></span>
+                            {% endif %}
+                        </div>
+                        {% if v.duration %}
+                        <small class="text-muted"><i class="bi bi-clock me-1"></i>{{ v.duration }}</small>
+                        {% endif %}
+                        
+                        {% if v.progress.last_position > 0 and not v.progress.is_completed %}
+                        <div class="progress mt-2" style="height: 3px;">
+                            <div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        {% endif %}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const videoPlayer = document.getElementById('videoPlayer');
+    const videoId = '{{ video.id }}';
+    let isCompleted = {% if progress.is_completed %}true{% else %}false{% endif %};
+    
+    // Set the last position if it exists
+    {% if progress.last_position > 0 %}
+    videoPlayer.currentTime = {{ progress.last_position }};
+    {% endif %}
+    
+    // Function to update progress
+    function updateProgress(currentTime, completed = false) {
+        fetch(`/courses/video/${videoId}/progress/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: `current_position=${Math.floor(currentTime)}&is_completed=${completed}`
+        });
+    }
+    
+    // Update progress every 15 seconds while playing
+    let progressInterval;
+    
+    videoPlayer.addEventListener('play', function() {
+        progressInterval = setInterval(function() {
+            updateProgress(videoPlayer.currentTime);
+        }, 15000);
+    });
+    
+    videoPlayer.addEventListener('pause', function() {
+        clearInterval(progressInterval);
+        updateProgress(videoPlayer.currentTime);
+    });
+    
+    // Mark as completed when the video ends
+    videoPlayer.addEventListener('ended', function() {
+        clearInterval(progressInterval);
+        isCompleted = true;
+        updateProgress(videoPlayer.currentTime, true);
+    });
+    
+    // Update progress when leaving the page
+    window.addEventListener('beforeunload', function() {
+        updateProgress(videoPlayer.currentTime, isCompleted);
+    });
+    
+    // Function to get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+</script>
+{% endblock %} 

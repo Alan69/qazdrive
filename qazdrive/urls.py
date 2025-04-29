@@ -28,7 +28,7 @@ urlpatterns = [
     path('payments/', include('payments.urls')),
     path('quiz/', include('quiz.urls')),
     path('subs_request/', include('subs_request.urls')),
-    # path('api/', include('userconf.urls')),
+    path('courses/', include('courses.urls')),
 
     # path(
     #     "favicon.ico",

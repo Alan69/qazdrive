@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Видеокурсы{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="course-title">Видеокурсы</h1>
+            <p class="lead">Выберите курс для просмотра доступных видеоуроков</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        {% for course in courses %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow course-card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ course.title }}</h5>
+                        <p class="card-text">{{ course.description|truncatechars:150 }}</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <a href="{% url 'courses:course_detail' course.id %}" class="btn btn-primary">Смотреть курс</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    В настоящее время нет доступных курсов.
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 

@@ -58,6 +58,9 @@ INSTALLED_APPS = [
     'quiz',
     'import_export',
     'subs_request',
+    'courses',
+    'chunked_upload',
+    'chunked_upload_override',
 ]
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
@@ -214,3 +217,15 @@ LOGGING = {
         },
     },
 }
+
+# Chunked upload settings
+CHUNKED_UPLOAD_PATH = 'uploads/chunked/'
+CHUNKED_UPLOAD_STORAGE_CLASS = 'django.core.files.storage.FileSystemStorage'
+CHUNKED_UPLOAD_ABSTRACT_MODEL = False
+CHUNKED_UPLOAD_MAX_BYTES = 10 * 1024 * 1024 * 1024  # 10GB max upload size
+CHUNKED_UPLOAD_EXPIRATION_DELTA = 60 * 60 * 24 * 7  # 7 days
+CHUNKED_UPLOAD_ENCODER = 'chunked_upload.encoders.MD5Encoder'
+
+# Increase Django's data upload max size
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024 * 1024  # 10GB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 26214400  # 25MB - files above this will be uploaded to disk

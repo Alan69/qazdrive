@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ course.title }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'courses:course_list' %}">Курсы</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ course.title }}</li>
+                </ol>
+            </nav>
+            
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <h1 class="course-title">{{ course.title }}</h1>
+                {% if request.user.is_staff %}
+                <a href="{% url 'courses:upload_video_form_course' course.id %}" class="btn btn-primary">
+                    <i class="bi bi-cloud-upload me-1"></i> Загрузить видео
+                </a>
+                {% endif %}
+            </div>
+            <p class="lead">{{ course.description }}</p>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link {% if selected_language == 'russian' %}active{% endif %}" 
+                               href="?language=russian">
+                                Русский ({{ russian_count }} видео)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if selected_language == 'kazakh' %}active{% endif %}" 
+                               href="?language=kazakh">
+                                Казахский ({{ kazakh_count }} видео)
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Доступные видео ({{ selected_language|title }})</h5>
+                    
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                        {% for video in videos %}
+                            <div class="col">
+                                <div class="card h-100 shadow-sm video-card">
+                                    {% if video.thumbnail %}
+                                        <img src="{{ video.thumbnail.url }}" class="card-img-top" alt="{{ video.title }}">
+                                    {% else %}
+                                        <div class="card-img-top bg-light text-center py-5">
+                                            <i class="bi bi-play-circle" style="font-size: 3rem;"></i>
+                                        </div>
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ video.title }}</h6>
+                                        <p class="card-text small text-muted">
+                                            {% if video.duration %}
+                                                <i class="bi bi-clock me-1"></i>{{ video.duration }}
+                                            {% endif %}
+                                        </p>
+                                        
+                                        {% if video.progress.is_completed %}
+                                            <div class="mb-2 text-success"><i class="bi bi-check-circle me-1"></i> Просмотрено</div>
+                                        {% elif video.progress.last_position > 0 %}
+                                            <div class="progress mb-2" style="height: 5px;">
+                                                <div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="card-footer bg-white border-top-0">
+                                        <a href="{% url 'courses:video_detail' video.id %}" class="btn btn-primary btn-sm w-100">
+                                            {% if video.progress.is_completed %}
+                                                Смотреть снова
+                                            {% elif video.progress.last_position > 0 %}
+                                                Продолжить
+                                            {% else %}
+                                                Начать просмотр
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    В этом курсе нет видео на {{ selected_language|title }} языке.
+                                    {% if request.user.is_staff %}
+                                    <a href="{% url 'courses:upload_video_form_course' course.id %}" class="alert-link">Загрузить видео</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

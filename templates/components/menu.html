@@ -72,6 +72,13 @@
       {% endif %}
 
       <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'courses:course_list' %}">
+          <i class="bi bi-play-circle"></i>
+          <span>Видеокурсы</span>
+        </a>
+      </li><!-- End Courses Nav -->
+
+      <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'logoutPage' %}">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Выйти</span>
