@@ -26,23 +26,23 @@
 
                 <div class="pt-4 pb-2">
                   <h5 class="card-title text-center pb-0 fs-4">Вход в систему</h5>
-                  <p class="text-center small">Введите свое имя пользователя и пароль</p>
+                  <p class="text-center small">Введите свой номер телефона и пароль</p>
                 </div>
 
                 <form class="row g-3 needs-validation"  method="POST">
                   {% csrf_token %}
                   <div class="col-12">
-                    <label for="yourUsername" class="form-label">Email</label>
+                    <label for="yourUsername" class="form-label">Номер телефона</label>
                     <div class="input-group has-validation">
-                      <span class="input-group-text" id="inputGroupPrepend">@</span>
-                      <input type="email"
-                      name="email"
-                      id="inputEmail"
+                      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-phone"></i></span>
+                      <input type="text"
+                      name="phone_number"
+                      id="inputPhoneNumber"
                       class="form-control"
-                   
+                      placeholder="+7XXXXXXXXXX"
                       required
                       autofocus>
-                      <div class="invalid-feedback">Пожалуйста введите Email.</div>
+                      <div class="invalid-feedback">Пожалуйста введите номер телефона.</div>
                     </div>
                   </div>
 

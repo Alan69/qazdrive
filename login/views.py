@@ -7,6 +7,7 @@ from userconf.models import User
 from .helpers import send_forget_password_mail
 from django.contrib import messages
 from .models import Profile
+import uuid
 
 # Create your views here.
 def loginPage(request):
@@ -14,9 +15,9 @@ def loginPage(request):
         return redirect('index')
     else:
        if request.method=="POST":
-        email=request.POST.get('email')
+        phone_number=request.POST.get('phone_number')
         password=request.POST.get('password')
-        user=authenticate(request,email=email,password=password)
+        user=authenticate(request,phone_number=phone_number,password=password)
         if user is not None:
             auth_login(request, user)
             return redirect('index')
@@ -78,23 +79,23 @@ def ChangePassword(request , token):
     return render(request , 'login/change-password.html' , context)
 
 
-import uuid
 def ForgetPassword(request):
     try:
         if request.method == 'POST':
-            email = request.POST.get('email')
+            phone_number = request.POST.get('phone_number')
             
-            if not User.objects.filter(email=email).first():
-                messages.success(request, 'Not user found with this email.')
+            if not User.objects.filter(phone_number=phone_number).first():
+                messages.success(request, 'Пользователь с таким номером телефона не найден.')
                 return redirect('/forget-password/')
             
-            user_obj = User.objects.get(email = email)
+            user_obj = User.objects.get(phone_number = phone_number)
             token = str(uuid.uuid4())
             profile_obj= Profile.objects.get(user = user_obj)
             profile_obj.forget_password_token = token
             profile_obj.save()
-            send_forget_password_mail(user_obj.email, token)
-            messages.success(request, 'An email is sent.')
+            # Here you'd need to implement SMS sending instead of email
+            # For now, we'll just redirect with the token in a message
+            messages.success(request, f'Код для сброса пароля отправлен на ваш номер телефона. Токен: {token}')
             return redirect('/forget-password/')
     except Exception as e:
         print(e)

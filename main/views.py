@@ -10,6 +10,3 @@ def index(request):
         'result': result
     }
     return render(request, 'main/index.html', context=context)
-    
-def partner(request):
-    return render(request, 'main/partner.html')
