@@ -5,13 +5,16 @@ from django.db.models import Q
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
-from .models import Course, Video, UserVideoProgress
+from django.utils import timezone
+from django.views import View
+from django.core.files.base import ContentFile
+from django.views.decorators.http import require_POST
+from django.conf import settings
 
-# Import custom chunked upload views and models
-from chunked_upload_override.views import ChunkedUploadView, ChunkedUploadCompleteView
-from chunked_upload.models import ChunkedUpload
-from chunked_upload_override.constants import http_status
+from .models import Course, Video, UserVideoProgress, ChunkedVideoUpload
 import os
+import json
+import shutil
 from datetime import timedelta
 
 @login_required
@@ -134,71 +137,7 @@ def update_video_progress(request, video_id):
     
     return JsonResponse({'status': 'error'}, status=400)
 
-# Chunked upload views
-class VideoChunkedUploadView(ChunkedUploadView):
-    model = ChunkedUpload
-    field_name = 'file'
-
-    def check_permissions(self, request):
-        # Check if user is authenticated
-        if not request.user.is_authenticated:
-            raise ChunkedUploadView.PermissionDenied
-
-class VideoChunkedUploadCompleteView(ChunkedUploadCompleteView):
-    model = ChunkedUpload
-    
-    def check_permissions(self, request):
-        # Check if user is authenticated
-        if not request.user.is_authenticated:
-            raise ChunkedUploadView.PermissionDenied
-
-    def on_completion(self, uploaded_file, request):
-        # Get the uploaded file
-        course_id = request.POST.get('course_id')
-        title = request.POST.get('title')
-        description = request.POST.get('description', '')
-        language = request.POST.get('language')
-        order = request.POST.get('order', 1)
-        
-        # Verify the course exists
-        try:
-            course = Course.objects.get(id=course_id)
-        except Course.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Course not found'}, status=400)
-        
-        # Get the file extension
-        _, ext = os.path.splitext(uploaded_file.name)
-        
-        # Create a unique filename
-        filename = f'course_videos/{course_id}_{language}_{title}_{uploaded_file.id}{ext}'
-        
-        # Create a new Video object
-        video = Video.objects.create(
-            course=course,
-            title=title,
-            description=description,
-            language=language,
-            order=int(order),
-            video_file=filename
-        )
-        
-        # Move the file to the permanent location
-        destination_path = os.path.join('media', filename)
-        os.makedirs(os.path.dirname(destination_path), exist_ok=True)
-        
-        with open(destination_path, 'wb') as destination:
-            for chunk in uploaded_file.chunks():
-                destination.write(chunk)
-        
-        return {'video_id': video.id}
-
-    def get_response_data(self, chunked_upload, request):
-        try:
-            response = self.on_completion(chunked_upload.file, request)
-            return response
-        except Exception as e:
-            return {'status': 'error', 'message': str(e)}
-
+# Custom chunked upload views
 @login_required
 def upload_video_form(request, course_id=None):
     """Form for uploading a new video with chunked upload"""
@@ -215,3 +154,148 @@ def upload_video_form(request, course_id=None):
     }
     
     return render(request, 'courses/upload_video.html', context)
+
+@csrf_exempt
+@login_required
+@require_POST
+def chunked_upload(request):
+    """Handle chunked upload requests"""
+    # Get upload_id if it exists
+    upload_id = request.POST.get('upload_id')
+    
+    if upload_id:
+        # Continue an existing upload
+        try:
+            chunked_upload = ChunkedVideoUpload.objects.get(
+                upload_id=upload_id, 
+                user=request.user,
+                status=ChunkedVideoUpload.STATUS_UPLOADING
+            )
+        except ChunkedVideoUpload.DoesNotExist:
+            return JsonResponse({
+                'error': 'Upload not found or already completed'
+            }, status=404)
+    else:
+        # New upload
+        try:
+            uploaded_file = request.FILES['file']
+            file_size = int(request.POST.get('file_size', 0))
+            
+            # Create a new chunked upload
+            chunked_upload = ChunkedVideoUpload(
+                user=request.user,
+                filename=uploaded_file.name,
+                file_size=file_size
+            )
+            
+            # Initialize the file
+            chunked_upload.file.save(uploaded_file.name, ContentFile(''))
+            
+        except KeyError:
+            return JsonResponse({
+                'error': 'No file found in request'
+            }, status=400)
+    
+    # Add the chunk to the file
+    try:
+        chunked_upload.append_chunk(request.FILES['file'])
+    except Exception as e:
+        chunked_upload.status = ChunkedVideoUpload.STATUS_FAILED
+        chunked_upload.save()
+        return JsonResponse({
+            'error': str(e)
+        }, status=500)
+    
+    # Return response
+    return JsonResponse({
+        'upload_id': chunked_upload.upload_id,
+        'offset': chunked_upload.offset,
+        'expires': chunked_upload.created_at + timedelta(days=1)
+    })
+
+@csrf_exempt
+@login_required
+@require_POST
+def chunked_upload_complete(request):
+    """Complete a chunked upload and create a Video instance"""
+    upload_id = request.POST.get('upload_id')
+    
+    if not upload_id:
+        return JsonResponse({
+            'error': 'No upload_id provided'
+        }, status=400)
+    
+    try:
+        chunked_upload = ChunkedVideoUpload.objects.get(
+            upload_id=upload_id, 
+            user=request.user, 
+            status=ChunkedVideoUpload.STATUS_UPLOADING
+        )
+    except ChunkedVideoUpload.DoesNotExist:
+        return JsonResponse({
+            'error': 'Upload not found or already completed'
+        }, status=404)
+    
+    # Get metadata for the video
+    try:
+        course_id = request.POST.get('course_id')
+        title = request.POST.get('title')
+        description = request.POST.get('description', '')
+        language = request.POST.get('language')
+        order = int(request.POST.get('order', 1))
+        
+        course = Course.objects.get(id=course_id)
+        
+        # Update chunked upload with metadata
+        chunked_upload.course = course
+        chunked_upload.title = title
+        chunked_upload.description = description
+        chunked_upload.language = language
+        chunked_upload.order = order
+        chunked_upload.status = ChunkedVideoUpload.STATUS_COMPLETED
+        chunked_upload.completed_at = timezone.now()
+        chunked_upload.save()
+        
+        # Get the target path for the completed video
+        target_path = chunked_upload.get_target_path()
+        
+        # Create a new Video object
+        video = Video(
+            course=course,
+            title=title,
+            description=description,
+            language=language,
+            order=order,
+            video_file=target_path
+        )
+        
+        # Save the video to get its ID
+        video.save()
+        
+        # Move the file to its final destination
+        temp_path = os.path.join(settings.MEDIA_ROOT, chunked_upload.file.name)
+        final_path = os.path.join(settings.MEDIA_ROOT, target_path)
+        
+        # Ensure the target directory exists
+        os.makedirs(os.path.dirname(final_path), exist_ok=True)
+        
+        # Copy the file to its final destination
+        shutil.copy2(temp_path, final_path)
+        
+        return JsonResponse({
+            'status': 'success',
+            'video_id': video.id,
+            'course_id': course.id
+        })
+        
+    except Course.DoesNotExist:
+        return JsonResponse({
+            'error': 'Course not found'
+        }, status=404)
+    except Exception as e:
+        # Mark as failed and return error
+        chunked_upload.status = ChunkedVideoUpload.STATUS_FAILED
+        chunked_upload.save()
+        return JsonResponse({
+            'error': str(e)
+        }, status=500)

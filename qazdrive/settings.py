@@ -59,7 +59,6 @@ INSTALLED_APPS = [
     'import_export',
     'subs_request',
     'courses',
-    'chunked_upload',
     'chunked_upload_override',
 ]
 

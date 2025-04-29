@@ -278,6 +278,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show progress bar
         uploadProgress.classList.remove('d-none');
         
+        // Reset upload state
+        currentChunk = 0;
+        
         // Start chunked upload
         uploadChunk();
     });
@@ -309,7 +312,14 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    throw new Error(data.error || 'Error uploading chunk');
+                });
+            }
+            return response.json();
+        })
         .then(data => {
             // Save the upload_id from the first chunk
             if (!uploadId && data.upload_id) {
@@ -335,7 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error uploading chunk:', error);
             uploadButton.disabled = false;
             uploadButton.textContent = 'Загрузить видео';
-            fileError.textContent = 'Ошибка при загрузке. Пожалуйста, попробуйте снова.';
+            fileError.textContent = 'Ошибка при загрузке: ' + error.message;
             fileError.classList.remove('d-none');
         });
     }
@@ -359,21 +369,27 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    throw new Error(data.error || 'Unknown error');
+                });
+            }
+            return response.json();
+        })
         .then(data => {
-            if (data.video_id) {
+            if (data.status === 'success' && data.course_id) {
                 // Redirect to the course page
-                const courseId = document.getElementById('course').value;
-                window.location.href = '/courses/' + courseId + '/';
+                window.location.href = '/courses/' + data.course_id + '/';
             } else {
-                throw new Error(data.message || 'Unknown error');
+                throw new Error(data.error || 'Unknown error');
             }
         })
         .catch(error => {
             console.error('Error completing upload:', error);
             uploadButton.disabled = false;
             uploadButton.textContent = 'Загрузить видео';
-            fileError.textContent = 'Ошибка при завершении загрузки. Пожалуйста, попробуйте снова.';
+            fileError.textContent = 'Ошибка при завершении загрузки: ' + error.message;
             fileError.classList.remove('d-none');
         });
     }
