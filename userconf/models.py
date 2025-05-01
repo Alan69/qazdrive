@@ -64,7 +64,7 @@ CITIES = (
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, verbose_name="Email", null=True, blank=True)
-    phone_number = models.CharField(max_length=15, db_index=True, unique=True, verbose_name="Номер телефона")
+    phone_number = models.CharField(max_length=15, db_index=True, unique=True, verbose_name="Номер телефона", null=True, blank=True)
     first_name = models.CharField(max_length=250, verbose_name="Имя")
     last_name = models.CharField(max_length=250, verbose_name="Фамилия")
     city = models.CharField(max_length=250, choices=CITIES, verbose_name="Выберите город")
