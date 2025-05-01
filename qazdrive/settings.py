@@ -59,7 +59,6 @@ INSTALLED_APPS = [
     'import_export',
     'subs_request',
     'courses',
-    'chunked_upload_override',
 ]
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
