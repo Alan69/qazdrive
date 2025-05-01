@@ -217,13 +217,8 @@ LOGGING = {
     },
 }
 
-# Chunked upload settings
-CHUNKED_UPLOAD_PATH = 'uploads/chunked/'
-CHUNKED_UPLOAD_STORAGE_CLASS = 'django.core.files.storage.FileSystemStorage'
-CHUNKED_UPLOAD_ABSTRACT_MODEL = False
-CHUNKED_UPLOAD_MAX_BYTES = 10 * 1024 * 1024 * 1024  # 10GB max upload size
-CHUNKED_UPLOAD_EXPIRATION_DELTA = 60 * 60 * 24 * 7  # 7 days
-CHUNKED_UPLOAD_ENCODER = 'chunked_upload.encoders.MD5Encoder'
+# Maximum upload file size
+MAX_UPLOAD_SIZE = 10 * 1024 * 1024 * 1024  # 10GB
 
 # Increase Django's data upload max size
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024 * 1024  # 10GB

@@ -12,6 +12,4 @@ urlpatterns = [
     # Upload URLs
     path('upload/', views.upload_video_form, name='upload_video_form'),
     path('upload/course/<int:course_id>/', views.upload_video_form, name='upload_video_form_course'),
-    path('api/upload/chunked/', views.chunked_upload, name='api_chunked_upload'),
-    path('api/upload/complete/', views.chunked_upload_complete, name='api_chunked_upload_complete'),
 ] 
