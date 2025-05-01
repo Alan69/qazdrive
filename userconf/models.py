@@ -64,7 +64,7 @@ CITIES = (
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, verbose_name="Email", null=True, blank=True)
-    phone_number = models.CharField(max_length=15, db_index=True, unique=True, verbose_name="Номер телефона", null=True, blank=True)
+    phone_number = models.CharField(max_length=15, db_index=True, unique=True, verbose_name="Номер телефона")
     first_name = models.CharField(max_length=250, verbose_name="Имя")
     last_name = models.CharField(max_length=250, verbose_name="Фамилия")
     city = models.CharField(max_length=250, choices=CITIES, verbose_name="Выберите город")
@@ -85,6 +85,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = ['first_name', 'last_name']
+
+    def __str__(self):
+        if self.phone_number:
+            return self.phone_number
+        if self.first_name and self.last_name:
+            return f"{self.first_name} {self.last_name}"
+        return f"User {self.id}" if self.id else "New User"
 
     class Meta:
         verbose_name = 'User'
