@@ -217,8 +217,8 @@ LOGGING = {
 }
 
 # Maximum upload file size
-MAX_UPLOAD_SIZE = 10 * 1024 * 1024 * 1024  # 10GB
+MAX_UPLOAD_SIZE = 5 * 1024 * 1024 * 1024  # 10GB
 
 # Increase Django's data upload max size
-DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024 * 1024  # 10GB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024 * 1024  # 10GB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 26214400  # 25MB - files above this will be uploaded to disk
