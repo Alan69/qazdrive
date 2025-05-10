@@ -77,7 +77,7 @@ def quiz(request):
     else:
         # Get all questions and select 40 random ones
         all_questions = list(Question.objects.all())
-        selected_questions = random.sample(all_questions, min(40, len(all_questions)))
+        selected_questions = random.sample(all_questions, min(180, len(all_questions)))
         
         # Prepare questions with their translations and options
         questions_data = []
