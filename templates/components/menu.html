@@ -2,13 +2,17 @@
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
 
-    <div class="d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center justify-content-between w-100">
       <a href="{%url 'index'%}" class="logo d-flex align-items-center">
 
         <span class="d-none d-lg-block"><img src="{% static 'logo/logoqaztest@2x.png' %}" style="width: 25px!important; height: auto" alt=""></span>
         <span class="d-none d-lg-block">SapaPDD</span>
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
+      <!-- Hamburger for mobile -->
+      <button class="btn btn-outline-primary d-lg-none ms-2" id="sidebarToggle" type="button" aria-label="Открыть меню">
+        <i class="bi bi-list" style="font-size: 1.5rem;"></i>
+      </button>
+      <i class="bi bi-list toggle-sidebar-btn d-none d-lg-inline"></i>
     </div><!-- End Logo -->
 
     <nav class="header-nav ms-auto">
@@ -40,7 +44,9 @@
   </header>
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
-
+    <button class="btn btn-link d-lg-none position-absolute top-0 end-0 mt-2 me-2" id="sidebarClose" style="z-index: 1100;">
+      <i class="bi bi-x-lg" style="font-size: 1.2rem;"></i>
+    </button>
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-heading">Меню</li>
@@ -88,4 +94,64 @@
     </ul>
 
   </aside><!-- End Sidebar-->
+  
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarClose = document.getElementById('sidebarClose');
+    function openSidebar() {
+      sidebar.classList.add('active-mobile');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('active-mobile');
+      document.body.style.overflow = '';
+    }
+    if (sidebarToggle) {
+      sidebarToggle.addEventListener('click', openSidebar);
+    }
+    if (sidebarClose) {
+      sidebarClose.addEventListener('click', closeSidebar);
+    }
+    // Optional: close sidebar when clicking outside
+    document.addEventListener('click', function(e) {
+      if (sidebar.classList.contains('active-mobile') && !sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+        closeSidebar();
+      }
+    });
+  });
+</script>
+<style>
+  @media (max-width: 991.98px) {
+    #sidebar {
+      display: none;
+      position: fixed;
+      z-index: 1050;
+      width: 250px;
+      height: 100vh;
+      background: #fff;
+      left: 0;
+      top: 0;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      transform: translateX(-100%);
+    }
+    #sidebar.active-mobile {
+      display: block;
+      transform: translateX(0);
+    }
+    body.sidebar-open {
+      overflow: hidden;
+    }
+    #sidebarClose {
+      display: block;
+    }
+  }
+  @media (min-width: 992px) {
+    #sidebarClose {
+      display: none !important;
+    }
+  }
+</style>
   
