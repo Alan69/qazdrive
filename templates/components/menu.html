@@ -9,8 +9,12 @@
         <span class="d-none d-lg-block">SapaPDD</span>
       </a>
       <!-- Hamburger for mobile -->
-      <button class="btn btn-outline-primary d-lg-none ms-2" id="sidebarToggle" type="button" aria-label="Открыть меню">
-        <i class="bi bi-list" style="font-size: 1.5rem;"></i>
+      <button class="btn btn-outline-primary d-lg-none ms-2 burger-menu" id="sidebarToggle" type="button" aria-label="Открыть меню">
+        <span class="burger-lines">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
       </button>
       <i class="bi bi-list toggle-sidebar-btn d-none d-lg-inline"></i>
     </div><!-- End Logo -->
@@ -153,5 +157,41 @@
       display: none !important;
     }
   }
+  /* Burger menu custom styles */
+  .burger-menu {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+    outline: none;
+  }
+  .burger-lines {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 22px;
+    position: relative;
+  }
+  .burger-lines span {
+    display: block;
+    width: 100%;
+    height: 4px;
+    margin: 2px 0;
+    background: #0d6efd;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .burger-menu:active .burger-lines span,
+  .burger-menu:focus .burger-lines span {
+    background: #0a58ca;
+  }
+  /* End burger menu custom styles */
 </style>
   
