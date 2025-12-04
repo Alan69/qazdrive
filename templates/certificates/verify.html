@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Проверка свидетельства - SapaPDD</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .verify-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .status-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.5rem;
+        }
+        .status-valid {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-invalid {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            color: #6c757d;
+        }
+        .info-value {
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="verify-card">
+        {% if is_valid %}
+        <div class="status-icon status-valid">
+            <i class="bi bi-check-lg"></i>
+        </div>
+        <h2 class="text-center text-success mb-4">Свидетельство действительно</h2>
+        {% else %}
+        <div class="status-icon status-invalid">
+            <i class="bi bi-x-lg"></i>
+        </div>
+        <h2 class="text-center text-danger mb-4">Свидетельство недействительно</h2>
+        <p class="text-center text-muted">
+            {% if certificate.status == 'revoked' %}
+            Данное свидетельство было отозвано
+            {% elif certificate.status == 'expired' %}
+            Срок действия свидетельства истек
+            {% else %}
+            Свидетельство не было выдано
+            {% endif %}
+        </p>
+        {% endif %}
+        
+        <div class="mt-4">
+            <div class="info-row">
+                <span class="info-label">Номер свидетельства:</span>
+                <span class="info-value">{{ certificate.certificate_number }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Курсант:</span>
+                <span class="info-value">{{ certificate.student.full_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Автошкола:</span>
+                <span class="info-value">{{ certificate.school.name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Категория:</span>
+                <span class="info-value">{{ certificate.category.code }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Дата выдачи:</span>
+                <span class="info-value">{{ certificate.issue_date|date:"d.m.Y" }}</span>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-outline-primary">
+                <i class="bi bi-house me-2"></i>
+                На главную
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,129 @@
+{% extends 'schools/base_school.html' %}
+
+{% block title %}{% if student %}Редактировать курсанта{% else %}Новый курсант{% endif %} - {{ school.name }}{% endblock %}
+
+{% block page_title %}{% if student %}Редактировать курсанта{% else %}Добавить курсанта{% endif %}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h6 class="mb-3">Личные данные</h6>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Фамилия *</label>
+                        {{ form.last_name }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Имя *</label>
+                        {{ form.first_name }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Отчество</label>
+                        {{ form.middle_name }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">ИИН *</label>
+                        {{ form.iin }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Дата рождения</label>
+                        {{ form.birth_date }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Фото</label>
+                        {{ form.photo }}
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h6 class="mb-3">Контактная информация</h6>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Телефон *</label>
+                        {{ form.phone }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        {{ form.email }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Адрес</label>
+                        {{ form.address }}
+                    </div>
+                    
+                    <h6 class="mb-3 mt-4">Обучение</h6>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Учебная группа *</label>
+                        {{ form.group }}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Дата зачисления</label>
+                            {{ form.enrollment_date }}
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Номер договора</label>
+                            {{ form.contract_number }}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Статус</label>
+                        {{ form.status }}
+                    </div>
+                </div>
+                
+                <div class="col-12">
+                    <h6 class="mb-3">Медицинская справка</h6>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Номер справки</label>
+                            {{ form.medical_certificate_number }}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Дата выдачи</label>
+                            {{ form.medical_certificate_date }}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Действительна до</label>
+                            {{ form.medical_certificate_valid_until }}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="form-label">Примечания</label>
+                        {{ form.notes }}
+                    </div>
+                </div>
+            </div>
+            
+            <hr>
+            
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'students:students' %}" class="btn btn-outline-secondary">Отмена</a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg me-2"></i>
+                    {% if student %}Сохранить{% else %}Добавить курсанта{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

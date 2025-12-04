@@ -1,0 +1,125 @@
+{% extends 'schools/base_school.html' %}
+
+{% block title %}Учебные группы - {{ school.name }}{% endblock %}
+
+{% block page_title %}Учебные группы{% endblock %}
+
+{% block content %}
+<p class="text-muted mb-4">Здесь отображаются все группы учебной организации {{ school.name }}</p>
+
+<!-- Filter Tabs -->
+<div class="filter-tabs mb-4">
+    <a href="?status=all" class="filter-tab {% if status_filter == 'all' %}active{% endif %}">Все</a>
+    <a href="?status=enrolling" class="filter-tab {% if status_filter == 'enrolling' %}active{% endif %}">Идет набор</a>
+    <a href="?status=training" class="filter-tab {% if status_filter == 'training' %}active{% endif %}">Идет обучения</a>
+    <a href="?status=exams" class="filter-tab {% if status_filter == 'exams' %}active{% endif %}">Экзамены</a>
+    <a href="?status=completed" class="filter-tab {% if status_filter == 'completed' %}active{% endif %}">Завершенные</a>
+</div>
+
+<!-- Search and Add -->
+<div class="row g-3 mb-4">
+    <div class="col-lg-8">
+        <form method="get" class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="hidden" name="status" value="{{ status_filter }}">
+            <input type="text" name="search" class="form-control" placeholder="Поиск по названию группы | данным курсанта" value="{{ search }}">
+        </form>
+    </div>
+    <div class="col-lg-4 text-end">
+        <a href="{% url 'students:group_add' %}" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-2"></i>
+            Добавить группу
+        </a>
+    </div>
+</div>
+
+<!-- Groups Table -->
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>ID <i class="bi bi-arrow-down"></i></th>
+                        <th>Название</th>
+                        <th>Категория</th>
+                        <th>Статистика</th>
+                        <th>Статус</th>
+                        <th>Начало</th>
+                        <th>Конец</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for group in groups %}
+                    <tr onclick="window.location='{% url 'students:group_detail' group.id %}'" style="cursor: pointer;">
+                        <td>{{ group.id }}</td>
+                        <td>
+                            <a href="{% url 'students:group_detail' group.id %}" class="text-decoration-none fw-semibold">
+                                {{ group.name }}
+                            </a>
+                        </td>
+                        <td>{{ group.category.code }}</td>
+                        <td>
+                            <i class="bi bi-people me-1"></i>
+                            {{ group.student_count }}
+                        </td>
+                        <td>
+                            {% if group.status == 'enrolling' %}
+                            <span class="badge-status badge-warning">Идет набор</span>
+                            {% elif group.status == 'training' %}
+                            <span class="badge-status badge-success">Идет обучение</span>
+                            {% elif group.status == 'exams' %}
+                            <span class="badge-status badge-info">Экзамены</span>
+                            {% elif group.status == 'completed' %}
+                            <span class="badge-status badge-secondary">Завершена</span>
+                            {% elif group.status == 'frozen' %}
+                            <span class="badge-status badge-secondary">Заморожена</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ group.start_date|date:"d.m.Y" }}</td>
+                        <td>{{ group.end_date|date:"d.m.Y"|default:"—" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            Группы не найдены
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Pagination -->
+{% if groups.has_other_pages %}
+<nav class="mt-4">
+    <ul class="pagination justify-content-end mb-0">
+        {% if groups.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ groups.previous_page_number }}&status={{ status_filter }}&search={{ search }}">
+                <i class="bi bi-chevron-left"></i>
+            </a>
+        </li>
+        {% endif %}
+        
+        {% for num in groups.paginator.page_range %}
+        <li class="page-item {% if groups.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}&status={{ status_filter }}&search={{ search }}">{{ num }}</a>
+        </li>
+        {% endfor %}
+        
+        {% if groups.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ groups.next_page_number }}&status={{ status_filter }}&search={{ search }}">
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}
+

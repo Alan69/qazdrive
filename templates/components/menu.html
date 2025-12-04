@@ -88,6 +88,19 @@
         </a>
       </li><!-- End Courses Nav -->
 
+      <!-- Avtomektep Platform Section -->
+      {% if request.user.is_authenticated %}
+      {% if request.user.is_platform_admin or request.user.is_staff %}
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'schools:school_list' %}" style="background: linear-gradient(90deg, #4154f1 0%, #2c3cdd 100%); color: white; border-radius: 8px; padding: 12px 16px; margin: 8px 12px; font-weight: 500;">
+          <i class="bi bi-building me-2"></i>
+          <span>Перейти в режим для автошколы</span>
+        </a>
+      </li>
+      {% endif %}
+      {% endif %}
+      <!-- End Avtomektep Platform Section -->
+
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'logoutPage' %}">
           <i class="bi bi-box-arrow-in-right"></i>

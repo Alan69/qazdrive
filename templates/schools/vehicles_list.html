@@ -1,0 +1,109 @@
+{% extends 'schools/base_school.html' %}
+
+{% block title %}Транспорт - {{ school.name }}{% endblock %}
+
+{% block page_title %}Учебные транспортные средства{% endblock %}
+
+{% block content %}
+<p class="text-muted mb-4">Здесь отображаются все учебные ТС учебной организации {{ school.name }}</p>
+
+<!-- Search and Add -->
+<div class="row g-3 mb-4">
+    <div class="col-lg-8">
+        <form method="get" class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text" name="search" class="form-control" placeholder="Поиск по таблице" value="{{ search }}">
+        </form>
+    </div>
+    <div class="col-lg-4 text-end">
+        <a href="{% url 'schools:vehicle_add' %}" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-2"></i>
+            Добавить ТС
+        </a>
+    </div>
+</div>
+
+<!-- Vehicles Table -->
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Марка (Модель)</th>
+                        <th>Гос. номер</th>
+                        <th>Статус</th>
+                        <th>Категория</th>
+                        <th>Описание</th>
+                        <th>Добавлен</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vehicle in vehicles %}
+                    <tr>
+                        <td>{{ vehicle.id }}</td>
+                        <td>
+                            <i class="bi bi-truck me-2"></i>
+                            {{ vehicle.brand }} {{ vehicle.model }}
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark border px-3 py-2">{{ vehicle.plate_number }}</span>
+                        </td>
+                        <td>
+                            {% if vehicle.status == 'active' %}
+                            <span class="text-success">• Активный</span>
+                            {% elif vehicle.status == 'maintenance' %}
+                            <span class="text-warning">• На обслуживании</span>
+                            {% else %}
+                            <span class="text-muted">• Неактивный</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ vehicle.category.code }}</td>
+                        <td>{{ vehicle.get_transmission_display }}</td>
+                        <td>{{ vehicle.created_at|date:"d.m.Y" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            Транспортные средства не найдены
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Pagination -->
+{% if vehicles.has_other_pages %}
+<nav class="mt-4">
+    <ul class="pagination justify-content-end mb-0">
+        {% if vehicles.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ vehicles.previous_page_number }}&search={{ search }}">
+                <i class="bi bi-chevron-left"></i>
+            </a>
+        </li>
+        {% endif %}
+        
+        {% for num in vehicles.paginator.page_range %}
+        <li class="page-item {% if vehicles.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}&search={{ search }}">{{ num }}</a>
+        </li>
+        {% endfor %}
+        
+        {% if vehicles.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ vehicles.next_page_number }}&search={{ search }}">
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}
+

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Existing apps
     'accounts.apps.AccountsConfig',
     'main',
     'login',
@@ -59,6 +60,12 @@ INSTALLED_APPS = [
     'import_export',
     'subs_request',
     'courses',
+    # New Avtomektep apps
+    'schools.apps.SchoolsConfig',
+    'staff.apps.StaffConfig',
+    'students.apps.StudentsConfig',
+    'tickets.apps.TicketsConfig',
+    'certificates.apps.CertificatesConfig',
 ]
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
@@ -73,9 +80,16 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'accounts.middleware.OneSessionPerUserMiddleware',
+    'schools.middleware.SchoolContextMiddleware',
 ]
 
 AUTH_USER_MODEL = 'userconf.User'
+
+# Custom authentication backend (allows login with phone or email)
+AUTHENTICATION_BACKENDS = [
+    'userconf.backends.PhoneOrEmailBackend',  # Custom backend
+    'django.contrib.auth.backends.ModelBackend',  # Fallback to default
+]
 
 ROOT_URLCONF = 'qazdrive.urls'
 

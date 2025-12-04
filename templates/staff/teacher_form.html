@@ -1,0 +1,111 @@
+{% extends 'schools/base_school.html' %}
+
+{% block title %}{% if teacher %}Редактировать преподавателя{% else %}Новый преподаватель{% endif %} - {{ school.name }}{% endblock %}
+
+{% block page_title %}{% if teacher %}Редактировать преподавателя{% else %}Добавить преподавателя{% endif %}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h6 class="mb-3">Личные данные</h6>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Фамилия *</label>
+                        {{ form.last_name }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Имя *</label>
+                        {{ form.first_name }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Отчество</label>
+                        {{ form.middle_name }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">ИИН *</label>
+                        {{ form.iin }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Телефон</label>
+                        {{ form.phone }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        {{ form.email }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Фото</label>
+                        {{ form.photo }}
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h6 class="mb-3">Должность и квалификация</h6>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Должность</label>
+                        {{ form.position }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Номер квалификационного свидетельства</label>
+                        {{ form.qualification_number }}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Дата выдачи</label>
+                            {{ form.qualification_issue_date }}
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Дата истечения</label>
+                            {{ form.qualification_expiry_date }}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Категории преподавания</label>
+                        <div class="d-flex flex-wrap gap-2">
+                            {{ form.teaching_categories }}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Статус</label>
+                        {{ form.status }}
+                    </div>
+                </div>
+                
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="form-label">Примечания</label>
+                        {{ form.notes }}
+                    </div>
+                </div>
+            </div>
+            
+            <hr>
+            
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'staff:teachers' %}" class="btn btn-outline-secondary">Отмена</a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg me-2"></i>
+                    {% if teacher %}Сохранить{% else %}Добавить преподавателя{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

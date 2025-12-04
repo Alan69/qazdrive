@@ -1,0 +1,52 @@
+{% extends 'schools/base_school.html' %}
+
+{% block title %}{% if cabinet %}Редактировать{% else %}Добавить{% endif %} кабинет - {{ school.name }}{% endblock %}
+
+{% block page_title %}{% if cabinet %}Редактировать{% else %}Добавить{% endif %} учебный кабинет{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <strong>Ошибка!</strong> Пожалуйста, исправьте ошибки ниже.
+                    </div>
+                    {% endif %}
+                    
+                    <div class="row g-3">
+                        {% for field in form %}
+                        <div class="col-md-{% if field.name == 'address' %}12{% else %}6{% endif %}">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                            <div class="invalid-feedback d-block">{{ field.errors.0 }}</div>
+                            {% endif %}
+                            {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mt-4 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-lg me-2"></i>
+                            {% if cabinet %}Сохранить изменения{% else %}Добавить кабинет{% endif %}
+                        </button>
+                        <a href="{% url 'schools:cabinets' %}" class="btn btn-secondary">
+                            <i class="bi bi-x-lg me-2"></i>
+                            Отмена
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

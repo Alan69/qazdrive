@@ -1,0 +1,77 @@
+{% extends 'schools/base_school.html' %}
+
+{% block title %}Кабинеты - {{ school.name }}{% endblock %}
+
+{% block page_title %}Кабинеты{% endblock %}
+
+{% block content %}
+<p class="text-muted mb-4">Здесь отображаются все кабинеты автошколы</p>
+
+<!-- Filter Tabs -->
+<div class="filter-tabs mb-4">
+    <a href="?status=approved" class="filter-tab {% if status_filter == 'approved' %}active{% endif %}">Одобренные</a>
+    <a href="?status=pending" class="filter-tab {% if status_filter == 'pending' %}active{% endif %}">В ожидании</a>
+</div>
+
+<!-- Add Button -->
+<div class="text-end mb-4">
+    <a href="{% url 'schools:cabinet_add' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-2"></i>
+        Подавать заявку на новый кабинет
+    </a>
+</div>
+
+<!-- Cabinets Table -->
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Адрес</th>
+                        <th>Статус согласования</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cabinet in cabinets %}
+                    <tr>
+                        <td>{{ cabinet.id }}</td>
+                        <td>{{ cabinet.address }}</td>
+                        <td>
+                            {% if cabinet.approval_status == 'approved' %}
+                            <span class="text-success">Одобрено</span>
+                            {% elif cabinet.approval_status == 'pending' %}
+                            <span class="text-warning">В ожидании</span>
+                            {% else %}
+                            <span class="text-danger">Отклонено</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            Кабинеты не найдены
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        Показано 0-{{ cabinets|length }} из {{ cabinets|length }}
+    </div>
+</div>
+
+<!-- Pagination -->
+<nav class="mt-4">
+    <ul class="pagination justify-content-end mb-0">
+        <li class="page-item active">
+            <span class="page-link">1</span>
+        </li>
+    </ul>
+</nav>
+{% endblock %}
+

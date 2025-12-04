@@ -1,0 +1,135 @@
+{% extends 'schools/base_school.html' %}
+
+{% block title %}Карточки каталога - {{ school.name }}{% endblock %}
+
+{% block page_title %}Карточки каталога услуг{% endblock %}
+
+{% block content %}
+<p class="text-muted mb-4">Управление услугами и курсами, отображаемыми в каталоге {{ school.name }}</p>
+
+<!-- Filter Tabs -->
+<div class="filter-tabs mb-4">
+    <a href="?status=active" class="filter-tab {% if status_filter == 'active' %}active{% endif %}">Активные</a>
+    <a href="?status=inactive" class="filter-tab {% if status_filter == 'inactive' %}active{% endif %}">Неактивные</a>
+</div>
+
+<!-- Search and Add -->
+<div class="row g-3 mb-4">
+    <div class="col-lg-8">
+        <form method="get" class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="hidden" name="status" value="{{ status_filter }}">
+            <input type="text" name="search" class="form-control" placeholder="Поиск по названию" value="{{ search }}">
+        </form>
+    </div>
+    <div class="col-lg-4 text-end">
+        <a href="{% url 'schools:catalog_card_add' %}" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-2"></i>
+            Добавить карточку
+        </a>
+    </div>
+</div>
+
+<!-- Catalog Cards Grid -->
+<div class="row g-4">
+    {% for card in catalog_cards %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h5 class="card-title mb-0">{{ card.name }}</h5>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-link text-muted" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-three-dots-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'schools:catalog_card_edit' card.id %}">
+                                <i class="bi bi-pencil me-2"></i>Редактировать
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="#" onclick="return confirm('Удалить карточку?')">
+                                <i class="bi bi-trash me-2"></i>Удалить
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <span class="badge bg-primary">{{ card.category.code }}</span>
+                    {% if card.is_active %}
+                    <span class="badge bg-success">Активна</span>
+                    {% else %}
+                    <span class="badge bg-secondary">Неактивна</span>
+                    {% endif %}
+                </div>
+                
+                {% if card.description %}
+                <p class="card-text text-muted small">{{ card.description|truncatewords:20 }}</p>
+                {% endif %}
+                
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <small class="text-muted">
+                        <i class="bi bi-calendar me-1"></i>
+                        {{ card.created_at|date:"d.m.Y" }}
+                    </small>
+                    <span class="text-muted small">
+                        Статус: 
+                        {% if card.status == 'published' %}
+                        <span class="text-success">Опубликована</span>
+                        {% elif card.status == 'draft' %}
+                        <span class="text-warning">Черновик</span>
+                        {% else %}
+                        <span class="text-muted">{{ card.get_status_display }}</span>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-inbox fs-1 d-block mb-3 text-muted"></i>
+                <h5 class="text-muted">Карточки каталога не найдены</h5>
+                <p class="text-muted mb-4">Создайте первую карточку услуги для отображения в каталоге</p>
+                <a href="{% url 'schools:catalog_card_add' %}" class="btn btn-primary">
+                    <i class="bi bi-plus-lg me-2"></i>
+                    Добавить карточку
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination -->
+{% if catalog_cards.has_other_pages %}
+<nav class="mt-4">
+    <ul class="pagination justify-content-end mb-0">
+        {% if catalog_cards.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ catalog_cards.previous_page_number }}&status={{ status_filter }}&search={{ search }}">
+                <i class="bi bi-chevron-left"></i>
+            </a>
+        </li>
+        {% endif %}
+        
+        {% for num in catalog_cards.paginator.page_range %}
+        <li class="page-item {% if catalog_cards.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}&status={{ status_filter }}&search={{ search }}">{{ num }}</a>
+        </li>
+        {% endfor %}
+        
+        {% if catalog_cards.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ catalog_cards.next_page_number }}&status={{ status_filter }}&search={{ search }}">
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}
+

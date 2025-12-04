@@ -1,0 +1,106 @@
+{% extends 'schools/base_school.html' %}
+
+{% block title %}Мои заявки{% endblock %}
+
+{% block page_title %}Мои заявки{% endblock %}
+
+{% block content %}
+{% if is_user_section %}
+<p class="text-muted mb-4">Ваши обращение в службу поддержки</p>
+{% else %}
+<p class="text-muted mb-4">Обращение в тех поддержку, связанные с автошколой {{ school.name }}</p>
+{% endif %}
+
+<!-- Create Button -->
+<div class="mb-4">
+    <a href="{% url 'tickets:create' %}" class="btn btn-danger">
+        Создать новое обращение
+    </a>
+</div>
+
+<!-- Tickets Table -->
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Тема обращения</th>
+                        <th>Пользователь</th>
+                        <th>Статус</th>
+                        {% if not is_user_section %}
+                        <th>Администратор</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                    <tr onclick="window.location='{% url 'tickets:detail' ticket.id %}'" style="cursor: pointer;">
+                        <td>{{ ticket.id }}</td>
+                        <td>{{ ticket.get_subject_display }}</td>
+                        <td>{{ ticket.user.full_name }}</td>
+                        <td>
+                            {% if ticket.status == 'new' %}
+                            <span class="badge-status badge-secondary">Новый</span>
+                            {% elif ticket.status == 'in_progress' %}
+                            <span class="badge-status badge-info">В работе</span>
+                            {% elif ticket.status == 'waiting' %}
+                            <span class="badge-status badge-warning">Ожидает ответа</span>
+                            {% elif ticket.status == 'resolved' %}
+                            <span class="badge-status badge-success">Решён</span>
+                            {% elif ticket.status == 'closed' %}
+                            <span class="badge-status badge-success">Закрыт</span>
+                            {% endif %}
+                        </td>
+                        {% if not is_user_section %}
+                        <td>{{ ticket.assigned_admin.full_name|default:"-" }}</td>
+                        {% endif %}
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            Заявки не найдены
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        Показано 0-{{ tickets|length }} из {{ tickets.paginator.count|default:tickets|length }}
+    </div>
+</div>
+
+<!-- Pagination -->
+{% if tickets.has_other_pages %}
+<nav class="mt-4">
+    <ul class="pagination justify-content-end mb-0">
+        {% if tickets.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ tickets.previous_page_number }}">
+                <i class="bi bi-chevron-left"></i>
+            </a>
+        </li>
+        {% endif %}
+        
+        {% for num in tickets.paginator.page_range %}
+        <li class="page-item {% if tickets.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+        </li>
+        {% endfor %}
+        
+        {% if tickets.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ tickets.next_page_number }}">
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}
+

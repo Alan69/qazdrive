@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Список автошкол{% endblock %}
+
+{% block content %}
+<div class="pagetitle">
+    <h1>Мои автошколы</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+            <li class="breadcrumb-item active">Автошколы</li>
+        </ol>
+    </nav>
+</div>
+
+<section class="section">
+    <div class="row">
+        {% if schools %}
+            {% for school in schools %}
+            <div class="col-lg-6 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ school.name }}</h5>
+                        
+                        <div class="mb-3">
+                            <p class="mb-1"><strong>БИН/ИИН:</strong> {{ school.bin_or_iin }}</p>
+                            <p class="mb-1"><strong>Адрес:</strong> {{ school.address }}</p>
+                            <p class="mb-1"><strong>Телефон:</strong> {{ school.phone }}</p>
+                            {% if school.email %}
+                            <p class="mb-1"><strong>Email:</strong> {{ school.email }}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <p class="mb-1"><strong>Категории:</strong>
+                                {% for category in school.categories.all %}
+                                    <span class="badge bg-primary">{{ category.code }}</span>
+                                {% empty %}
+                                    <span class="text-muted">Не указаны</span>
+                                {% endfor %}
+                            </p>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                {% if school.is_active %}
+                                    <span class="badge bg-success">Активна</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Неактивна</span>
+                                {% endif %}
+                            </div>
+                            <a href="{% url 'schools:switch_school' school.id %}" class="btn btn-primary">
+                                <i class="bi bi-box-arrow-in-right"></i> Открыть
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i>
+                    У вас нет доступа ни к одной автошколе. Обратитесь к администратору платформы.
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+

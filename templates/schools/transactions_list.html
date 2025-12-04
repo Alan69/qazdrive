@@ -1,0 +1,90 @@
+{% extends 'schools/base_school.html' %}
+
+{% block title %}Транзакции - {{ school.name }}{% endblock %}
+
+{% block page_title %}Транзакции школы{% endblock %}
+
+{% block content %}
+<a href="{% url 'schools:dashboard' %}" class="text-primary text-decoration-none mb-4 d-inline-block">
+    <i class="bi bi-arrow-left me-2"></i>
+    Назад
+</a>
+
+<!-- Stats Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center py-4">
+                <div class="rounded-circle bg-primary d-inline-flex align-items-center justify-content-center mb-3" 
+                     style="width: 60px; height: 60px;">
+                    <i class="bi bi-currency-dollar text-white fs-3"></i>
+                </div>
+                <p class="text-muted mb-1">Текущий баланс школы</p>
+                <h3 class="text-primary mb-0">{{ school.balance }} ₸</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center py-4">
+                <div class="rounded-circle bg-primary d-inline-flex align-items-center justify-content-center mb-3" 
+                     style="width: 60px; height: 60px;">
+                    <i class="bi bi-file-earmark-text text-white fs-3"></i>
+                </div>
+                <p class="text-muted mb-1">Кешбек за Aitest</p>
+                <h3 class="text-primary mb-0">{{ school.cashback_aitest_percent }} %</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center py-4">
+                <div class="rounded-circle bg-primary d-inline-flex align-items-center justify-content-center mb-3" 
+                     style="width: 60px; height: 60px;">
+                    <i class="bi bi-award text-white fs-3"></i>
+                </div>
+                <p class="text-muted mb-1">Кешбек за электронные свидетельства</p>
+                <h3 class="text-primary mb-0">{{ school.cashback_certificate_percent }} %</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Transactions Table -->
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Сумма</th>
+                        <th>Тип</th>
+                        <th>Дата создания</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.id }}</td>
+                        <td>{{ transaction.amount }} ₸</td>
+                        <td>{{ transaction.get_transaction_type_display }}</td>
+                        <td>{{ transaction.created_at|date:"d.m.Y H:i" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-5 text-muted">
+                            Нет строк
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        Показано 0-{{ transactions|length }} из {{ transactions.paginator.count|default:0 }}
+    </div>
+</div>
+{% endblock %}
+

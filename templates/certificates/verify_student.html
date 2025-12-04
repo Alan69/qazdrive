@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Проверка в реестре курсантов - Avtomektep.kz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1d21 0%, #2d3238 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 600px;
+        }
+        .search-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1d21;
+            margin-bottom: 10px;
+        }
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            color: #6c757d;
+        }
+        .info-value {
+            font-weight: 600;
+        }
+        .found-badge {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .not-found-badge {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-card">
+            <div class="text-center mb-4">
+                <div class="logo">SapaPDD</div>
+                <p class="text-muted">Проверка в реестре курсантов</p>
+            </div>
+            
+            <form method="get" action="">
+                <div class="mb-3">
+                    <label for="iin" class="form-label">Введите ИИН курсанта</label>
+                    <input type="text" 
+                           class="form-control form-control-lg" 
+                           id="iin" 
+                           name="iin" 
+                           value="{{ iin }}"
+                           placeholder="123456789012"
+                           maxlength="12"
+                           pattern="\d{12}"
+                           required>
+                    <div class="form-text">12 цифр индивидуального идентификационного номера</div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                    <i class="bi bi-search me-2"></i>
+                    Проверить
+                </button>
+            </form>
+        </div>
+        
+        {% if result %}
+        <div class="result-card">
+            {% if result.found %}
+            <div class="text-center mb-4">
+                <span class="found-badge">
+                    <i class="bi bi-check-circle"></i>
+                    Курсант найден в реестре
+                </span>
+            </div>
+            
+            <div class="info-row">
+                <span class="info-label">ФИО:</span>
+                <span class="info-value">{{ result.full_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Автошкола:</span>
+                <span class="info-value">{{ result.school_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Учебная группа:</span>
+                <span class="info-value">{{ result.group_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Категория:</span>
+                <span class="info-value">{{ result.category }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Дата зачисления:</span>
+                <span class="info-value">{{ result.enrollment_date|date:"d.m.Y" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Статус:</span>
+                <span class="info-value">{{ result.status }}</span>
+            </div>
+            {% else %}
+            <div class="text-center">
+                <span class="not-found-badge">
+                    <i class="bi bi-x-circle"></i>
+                    Курсант не найден в реестре
+                </span>
+                <p class="text-muted mt-3">
+                    Убедитесь, что ИИН введен правильно, или обратитесь в автошколу для уточнения информации.
+                </p>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <div class="text-center mt-4">
+            <a href="/" class="text-white text-decoration-none">
+                <i class="bi bi-house me-2"></i>
+                На главную
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+

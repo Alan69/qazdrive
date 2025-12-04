@@ -1,0 +1,120 @@
+{% extends 'schools/base_school.html' %}
+
+{% block title %}Преподаватели - {{ school.name }}{% endblock %}
+
+{% block page_title %}Преподаватели{% endblock %}
+
+{% block content %}
+<p class="text-muted mb-4">Здесь отображаются все преподаватели учебной организации {{ school.name }}</p>
+
+<!-- Filter Tabs -->
+<div class="filter-tabs mb-4">
+    <a href="?status=active" class="filter-tab {% if status_filter == 'active' %}active{% endif %}">Активные</a>
+    <a href="?status=archived" class="filter-tab {% if status_filter == 'archived' %}active{% endif %}">Архив</a>
+</div>
+
+<!-- Search and Add -->
+<div class="row g-3 mb-4">
+    <div class="col-lg-8">
+        <form method="get" class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="hidden" name="status" value="{{ status_filter }}">
+            <input type="text" name="search" class="form-control" placeholder="Поиск по таблице" value="{{ search }}">
+        </form>
+    </div>
+    <div class="col-lg-4 text-end">
+        <a href="{% url 'staff:teacher_add' %}" class="btn btn-primary">
+            <i class="bi bi-person-plus me-2"></i>
+            Добавить преподавателя
+        </a>
+    </div>
+</div>
+
+<!-- Teachers Table -->
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>ID <i class="bi bi-arrow-down"></i></th>
+                        <th>ФИО</th>
+                        <th>Добавлен</th>
+                        <th>Должность</th>
+                        <th>Статус</th>
+                        <th>Примечание</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for teacher in teachers %}
+                    <tr>
+                        <td>{{ teacher.id|truncatechars:6 }}</td>
+                        <td>{{ teacher.full_name }}</td>
+                        <td>{{ teacher.created_at|date:"d.m.Y" }}</td>
+                        <td>{{ teacher.get_position_display }}</td>
+                        <td>
+                            {% if teacher.status == 'active' %}
+                            <span class="text-success">• Активный</span>
+                            {% else %}
+                            <span class="text-muted">• {{ teacher.get_status_display }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if teacher.needs_info_update %}
+                            <span class="warning-note">
+                                <i class="bi bi-exclamation-circle"></i>
+                                Необходимо обновить информацию
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'staff:teacher_edit' teacher.id %}" class="btn btn-sm btn-primary">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            Преподаватели не найдены
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Pagination -->
+{% if teachers.has_other_pages %}
+<nav class="mt-4">
+    <ul class="pagination justify-content-end mb-0">
+        {% if teachers.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ teachers.previous_page_number }}&status={{ status_filter }}&search={{ search }}">
+                <i class="bi bi-chevron-left"></i>
+            </a>
+        </li>
+        {% endif %}
+        
+        {% for num in teachers.paginator.page_range %}
+        <li class="page-item {% if teachers.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}&status={{ status_filter }}&search={{ search }}">{{ num }}</a>
+        </li>
+        {% endfor %}
+        
+        {% if teachers.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ teachers.next_page_number }}&status={{ status_filter }}&search={{ search }}">
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}
+
