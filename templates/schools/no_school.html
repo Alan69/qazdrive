@@ -1,0 +1,162 @@
+{% extends 'schools/base_school.html' %}
+{% load static %}
+
+{% block title %}Добро пожаловать - SapaPDD{% endblock %}
+
+{% block page_header %}Добро пожаловать{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Welcome Card -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body text-center py-5">
+                    <div class="mb-4">
+                        <i class="bi bi-building display-1 text-primary opacity-50"></i>
+                    </div>
+                    <h2 class="fw-bold mb-3">Добро пожаловать, {{ user.first_name }}!</h2>
+                    <p class="text-muted mb-4 fs-5">
+                        У вас пока нет доступа к автошколам. Вы можете связаться с администратором, 
+                        чтобы получить доступ к панели управления автошколой.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="mailto:support@sapapdd.kz" class="btn btn-primary btn-lg">
+                            <i class="bi bi-envelope me-2"></i>
+                            Связаться с поддержкой
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Available Features -->
+            <div class="row g-4">
+                <div class="col-12">
+                    <h4 class="fw-bold mb-3">
+                        <i class="bi bi-star-fill text-warning me-2"></i>
+                        Доступные функции
+                    </h4>
+                </div>
+                
+                <!-- Quiz Feature -->
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100 hover-lift">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon bg-primary bg-opacity-10 text-primary rounded-3 p-3 me-3">
+                                    <i class="bi bi-pencil-square fs-4"></i>
+                                </div>
+                                <h5 class="mb-0 fw-bold">Тестирование ПДД</h5>
+                            </div>
+                            <p class="text-muted mb-3">
+                                Подготовьтесь к экзамену с актуальными вопросами по правилам дорожного движения
+                            </p>
+                            <a href="{% url 'category' %}" class="btn btn-outline-primary">
+                                <i class="bi bi-play-fill me-1"></i>
+                                Начать тестирование
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Courses Feature -->
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100 hover-lift">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon bg-success bg-opacity-10 text-success rounded-3 p-3 me-3">
+                                    <i class="bi bi-play-circle fs-4"></i>
+                                </div>
+                                <h5 class="mb-0 fw-bold">Видеокурсы</h5>
+                            </div>
+                            <p class="text-muted mb-3">
+                                Обучающие видеоматериалы от профессиональных инструкторов
+                            </p>
+                            <a href="{% url 'courses:course_list' %}" class="btn btn-outline-success">
+                                <i class="bi bi-collection-play me-1"></i>
+                                Смотреть курсы
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Feature -->
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100 hover-lift">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon bg-info bg-opacity-10 text-info rounded-3 p-3 me-3">
+                                    <i class="bi bi-person-circle fs-4"></i>
+                                </div>
+                                <h5 class="mb-0 fw-bold">Мой профиль</h5>
+                            </div>
+                            <p class="text-muted mb-3">
+                                Управляйте своими данными и просматривайте историю тестирования
+                            </p>
+                            <a href="{% url 'profile' %}" class="btn btn-outline-info">
+                                <i class="bi bi-gear me-1"></i>
+                                Открыть профиль
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Dashboard Feature -->
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100 hover-lift">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon bg-warning bg-opacity-10 text-warning rounded-3 p-3 me-3">
+                                    <i class="bi bi-bar-chart-line fs-4"></i>
+                                </div>
+                                <h5 class="mb-0 fw-bold">История тестов</h5>
+                            </div>
+                            <p class="text-muted mb-3">
+                                Просматривайте результаты пройденных тестов и отслеживайте прогресс
+                            </p>
+                            <a href="{% url 'quiz_dashboard' %}" class="btn btn-outline-warning">
+                                <i class="bi bi-clock-history me-1"></i>
+                                Смотреть историю
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Card -->
+            <div class="card border-0 bg-light mt-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-start">
+                        <i class="bi bi-info-circle text-primary fs-4 me-3"></i>
+                        <div>
+                            <h6 class="fw-bold mb-1">Хотите зарегистрировать автошколу?</h6>
+                            <p class="text-muted mb-0 small">
+                                Если вы являетесь представителем автошколы и хотите использовать нашу платформу,
+                                свяжитесь с нами для получения доступа к полному функционалу системы управления автошколой.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+.feature-icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
+{% endblock %}
+

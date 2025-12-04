@@ -42,16 +42,29 @@ def school_required(view_func):
         school = get_current_school(request)
         if not school:
             messages.error(request, 'У вас нет доступа к автошколам')
-            return redirect('index')
+            return redirect('schools:no_school')
         request.current_school = school
         return view_func(request, *args, **kwargs)
     return wrapper
 
 
 @login_required
+def no_school(request):
+    """Page for users without school access"""
+    context = {
+        'user': request.user,
+    }
+    return render(request, 'schools/no_school.html', context)
+
+
+@login_required
 def school_list(request):
     """List all schools available to the user"""
     user_schools = get_user_schools(request.user)
+    
+    if user_schools.count() == 0:
+        # User has no schools - show no_school page
+        return redirect('schools:no_school')
     
     if user_schools.count() == 1:
         # If user has access to only one school, redirect to dashboard

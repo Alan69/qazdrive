@@ -544,6 +544,28 @@
             </ul>
             {% endif %}
             
+            <div class="nav-section mt-4">Обучение ПДД</div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' %}">
+                        <i class="bi bi-pencil-square"></i>
+                        Тестирование ПДД
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quiz_dashboard' %}">
+                        <i class="bi bi-bar-chart-line"></i>
+                        История тестов
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'courses:course_list' %}">
+                        <i class="bi bi-play-circle"></i>
+                        Видеокурсы
+                    </a>
+                </li>
+            </ul>
+            
             <div class="nav-section mt-4">Данные пользователя</div>
             <ul class="nav flex-column">
                 <li class="nav-item">
@@ -554,22 +576,16 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">
+                        <i class="bi bi-gear"></i>
+                        Мой профиль
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {% if 'user_tickets' in request.resolver_match.url_name %}active{% endif %}" 
                        href="{% url 'tickets:user_tickets' %}">
                         <i class="bi bi-headset"></i>
                         Служба поддержки
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="bi bi-list-check"></i>
-                        Журнал авторизаций
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="bi bi-credit-card"></i>
-                        Транзакции
                     </a>
                 </li>
             </ul>

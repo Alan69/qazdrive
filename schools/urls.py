@@ -6,6 +6,7 @@ app_name = 'schools'
 urlpatterns = [
     # School list and management
     path('', views.school_list, name='school_list'),
+    path('no-school/', views.no_school, name='no_school'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('switch/<int:school_id>/', views.switch_school, name='switch_school'),
     

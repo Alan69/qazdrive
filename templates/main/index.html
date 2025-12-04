@@ -1,5 +1,5 @@
 {% extends 'base.html' %} 
-{% block title %}SapaPDD - Главная{% endblock title %}
+{% block title %}SapaPDD - История тестов{% endblock title %}
 {% load static %}
 
 {%block content%}
@@ -17,10 +17,11 @@
   {% endif %}
 
     <div class="pagetitle mb-4">
-        <h1>Главная страница</h1>
+        <h1>Тестирование ПДД</h1>
         <nav>
           <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Главная</li>
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+            <li class="breadcrumb-item active">История тестов</li>
           </ol>
         </nav>
     </div>

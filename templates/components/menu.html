@@ -55,31 +55,29 @@
 
       <li class="nav-heading">Меню</li>
 
-      {%if request.path == '/'%}
+      <!-- Back to School Mode -->
+      {% if request.user.is_authenticated %}
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{%url 'profile'%}">
-          <i class="bi bi-person"></i>
-          <span>Мой профиль</span>
-        </a>
-      </li>
-      {% else %}
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{%url 'index'%}">
-          <i class="ri-home-4-line"></i>
-          <span>Главная</span>
+        <a class="nav-link collapsed" href="{%url 'index'%}" style="background: linear-gradient(90deg, #4154f1 0%, #2c3cdd 100%); color: white; border-radius: 8px; padding: 12px 16px; margin: 4px 12px 12px; font-weight: 500;">
+          <i class="bi bi-building me-2"></i>
+          <span>Режим автошколы</span>
         </a>
       </li>
       {% endif %}
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{%url 'quiz_dashboard'%}">
+          <i class="ri-home-4-line"></i>
+          <span>История тестов</span>
+        </a>
+      </li>
       
-      {%if request.path == '/quiz/'%}
-      {% else %}
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'category' %}">
           <i class="ri-pencil-ruler-2-fill"></i>
           <span>Начать тестирование</span>
         </a>
       </li><!-- End Quiz Nav -->
-      {% endif %}
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'courses:course_list' %}">
@@ -88,18 +86,12 @@
         </a>
       </li><!-- End Courses Nav -->
 
-      <!-- Avtomektep Platform Section -->
-      {% if request.user.is_authenticated %}
-      {% if request.user.is_platform_admin or request.user.is_staff %}
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'schools:school_list' %}" style="background: linear-gradient(90deg, #4154f1 0%, #2c3cdd 100%); color: white; border-radius: 8px; padding: 12px 16px; margin: 8px 12px; font-weight: 500;">
-          <i class="bi bi-building me-2"></i>
-          <span>Перейти в режим для автошколы</span>
+        <a class="nav-link collapsed" href="{%url 'profile'%}">
+          <i class="bi bi-person"></i>
+          <span>Мой профиль</span>
         </a>
       </li>
-      {% endif %}
-      {% endif %}
-      <!-- End Avtomektep Platform Section -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'logoutPage' %}">
