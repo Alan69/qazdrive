@@ -1,0 +1,160 @@
+{% extends 'schools/base_school.html' %}
+{% load static %}
+
+{% block title %}Редактирование автошколы{% endblock %}
+{% block page_title %}Редактирование автошколы{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row mb-3">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Общие сведения</h4>
+      <a href="{% url 'schools:profile' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left"></i>
+        Назад к профилю
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          {% if form.non_field_errors %}
+          <div class="alert alert-danger">
+            {{ form.non_field_errors }}
+          </div>
+          {% endif %}
+
+          <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            {% csrf_token %}
+
+            <div class="row g-3">
+              <div class="col-md-8">
+                <label class="form-label">Название</label>
+                {{ form.name }}
+                {{ form.name.errors }}
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Краткое название</label>
+                {{ form.short_name }}
+                {{ form.short_name.errors }}
+              </div>
+
+              <div class="col-md-8">
+                <label class="form-label">ФИО директора</label>
+                {{ form.director_full_name }}
+                {{ form.director_full_name.errors }}
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">ИИН директора</label>
+                {{ form.director_iin }}
+                {{ form.director_iin.errors }}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">БИН/ИИН</label>
+                {{ form.bin_iin }}
+                {{ form.bin_iin.errors }}
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Телефон</label>
+                {{ form.phone }}
+                {{ form.phone.errors }}
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Адрес</label>
+                {{ form.address }}
+                {{ form.address.errors }}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Email</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Лицензия</label>
+                {{ form.license_number }}
+                {{ form.license_number.errors }}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Дата выдачи лицензии</label>
+                {{ form.license_issue_date }}
+                {{ form.license_issue_date.errors }}
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Срок действия лицензии</label>
+                {{ form.license_expiry_date }}
+                {{ form.license_expiry_date.errors }}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Процент кешбэка (сертификаты)</label>
+                {{ form.cashback_certificate_percent }}
+                {{ form.cashback_certificate_percent.errors }}
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Процент кешбэка (AITest)</label>
+                {{ form.cashback_aitest_percent }}
+                {{ form.cashback_aitest_percent.errors }}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Разрешить электронные свидетельства</label>
+                <div class="form-check form-switch">
+                  {{ form.allow_electronic_certificates }}
+                </div>
+                {{ form.allow_electronic_certificates.errors }}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Логотип</label>
+                {{ form.logo }}
+                {{ form.logo.errors }}
+                {% if school.logo %}
+                  <div class="mt-2">
+                    <img src="{{ school.logo.url }}" alt="Логотип" style="max-height: 80px;">
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Категории для обучения</label>
+                <div class="d-flex flex-wrap gap-3">
+                  {{ form.categories }}
+                </div>
+                {{ form.categories.errors }}
+              </div>
+            </div>
+
+            <div class="mt-4 d-flex gap-2">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save me-1"></i> Сохранить
+              </button>
+              <a href="{% url 'schools:profile' %}" class="btn btn-outline-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="fw-bold mb-3">Памятка</h6>
+          <ul class="list-unstyled small text-muted mb-0">
+            <li class="mb-2">— Заполните корректные данные лицензии</li>
+            <li class="mb-2">— Укажите контактный телефон и email</li>
+            <li class="mb-2">— Загрузите актуальный логотип автошколы</li>
+            <li class="mb-0">— Не забудьте сохранить изменения</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

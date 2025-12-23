@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q, Count
@@ -10,6 +11,7 @@ from .models import StudentGroup, Student, StudentDocument, LessonRecord, ExamRe
 from .forms import StudentGroupForm, StudentForm, StudentDocumentForm, LessonRecordForm
 from schools.views import get_user_schools, get_current_school, school_required
 from schools.models import DrivingCategory
+from userconf.models import UserRole, UserSchoolRole
 
 
 # Groups views
@@ -219,7 +221,14 @@ def student_add(request, group_id=None):
         form = StudentForm(request.POST, request.FILES, school=school)
         if form.is_valid():
             student = form.save()
-            messages.success(request, 'Курсант добавлен')
+            password, user_created = _ensure_student_user_account(student)
+            if user_created and password:
+                messages.success(
+                    request,
+                    f'Курсант добавлен. Аккаунт создан: телефон {student.phone}, пароль {password}'
+                )
+            else:
+                messages.success(request, 'Курсант добавлен')
             return redirect('students:student_detail', student_id=student.id)
     else:
         form = StudentForm(school=school, initial=initial)
@@ -230,6 +239,83 @@ def student_add(request, group_id=None):
         'form': form,
     }
     return render(request, 'students/student_form.html', context)
+
+
+def _ensure_student_user_account(student):
+    """
+    Ensures the student has a linked platform user.
+    Returns (password, created_flag).
+    """
+    phone = (student.phone or '').strip()
+    if not phone:
+        return None, False
+
+    User = get_user_model()
+    password = None
+    user_created = False
+
+    # Try to find existing user by phone
+    user = User.objects.filter(phone_number=phone).first()
+
+    # Decide if we can safely set IIN on user (avoid unique conflicts)
+    def can_set_iin(u):
+        return bool(student.iin) and not User.objects.exclude(id=u.id if u and u.id else None).filter(iin=student.iin).exists()
+
+    if not user:
+        password = User.objects.make_random_password(length=8)
+        user_kwargs = {
+            'phone_number': phone,
+            'password': password,
+            'first_name': student.first_name or '',
+            'last_name': student.last_name or '',
+        }
+        if student.middle_name:
+            user_kwargs['middle_name'] = student.middle_name
+        if student.email:
+            user_kwargs['email'] = student.email
+        if can_set_iin(User()):
+            user_kwargs['iin'] = student.iin
+
+        user = User.objects.create_user(**user_kwargs)
+        user_created = True
+    else:
+        updated_fields = []
+        if not user.first_name and student.first_name:
+            user.first_name = student.first_name
+            updated_fields.append('first_name')
+        if not user.last_name and student.last_name:
+            user.last_name = student.last_name
+            updated_fields.append('last_name')
+        if not user.middle_name and student.middle_name:
+            user.middle_name = student.middle_name
+            updated_fields.append('middle_name')
+        if not user.email and student.email:
+            user.email = student.email
+            updated_fields.append('email')
+        if not user.iin and can_set_iin(user):
+            user.iin = student.iin
+            updated_fields.append('iin')
+        if updated_fields:
+            user.save(update_fields=updated_fields)
+
+    # Ensure student role
+    student_role, _ = UserRole.objects.get_or_create(
+        code='student',
+        defaults={'name': 'Курсант', 'description': 'Курсант'}
+    )
+    UserSchoolRole.objects.get_or_create(
+        user=user,
+        school=student.school,
+        role=student_role,
+        defaults={'is_active': True}
+    )
+
+    # Link student to user if not linked yet
+    if not student.user_id:
+        student.user = user
+        student.save(update_fields=['user'])
+
+    return password, user_created
 
 
 @login_required
